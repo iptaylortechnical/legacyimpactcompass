@@ -9,10 +9,9 @@ router.get('/', function(req, res, next){
 
 	    // Grab data from http request
 	pg.connect(connectionString, function(err, client, done) {
-
 //     // SQL Query > Insert Data
      client.query("INSERT INTO items(text, complete) values('there', '0')");
-
+		 
 //     // SQL Query > Select Data
      var query = client.query("SELECT * FROM items ORDER BY id ASC");
 //
