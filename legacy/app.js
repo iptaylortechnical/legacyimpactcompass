@@ -22,6 +22,7 @@ var usrLog = require('./routes/usrLog');
 
 //TESTS
 var le_test = require('./sqltests/database');
+var cooktest = require('./tests/cookietest');
 
 
 var app = express();
@@ -43,7 +44,9 @@ app.use('/registeradvisor', advReg);
 app.use('/register', usrReg);
 app.use('/login', usrLog);
 app.use('/loginadvisor', advLog);
+
 app.use('/sqltest', le_test);
+app.use('/cooktest', cooktest);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
