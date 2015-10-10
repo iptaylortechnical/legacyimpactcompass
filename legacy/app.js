@@ -19,6 +19,11 @@ var usrReg = require('./routes/usrReg');
 //user login
 var usrLog = require('./routes/usrLog');
 
+
+//TESTS
+var le_test = require('./sqltests/database');
+
+
 var app = express();
 
 // view engine setup
@@ -38,6 +43,7 @@ app.use('/registeradvisor', advReg);
 app.use('/register', usrReg);
 app.use('/login', usrLog);
 app.use('/loginadvisor', advLog);
+app.use('/sqltest', le_test);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
