@@ -20,7 +20,12 @@ router.post('/', function(req, res){
 //     // After all data is returned, close connection and return results
     query.on('end', function() {
         done();
-        return res.json(results);
+        if(password == results[0].password){
+					res.cookie('sessionID', password);
+        	res.send('authenticated <script>setTimeout(function(){window.location="/";}, 3000);</script>');
+        }else{
+        	res.send('incorrect');
+        }
     });
 		
 	});
