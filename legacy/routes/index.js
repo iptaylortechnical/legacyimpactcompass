@@ -6,9 +6,10 @@ router.get('/', function(req, res, next) {
   //res.render('index', { title: 'Express' });
 	session = req.cookies.sessionID || '';
 	if(session){
+		console.log('yep');
 		res.send(session);
 	}else{
-		res.send('nope');
+		res.send('<script>window.location="login";</script>');
 	}
 });
 

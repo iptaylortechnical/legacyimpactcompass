@@ -16,8 +16,9 @@ var advLog = require('./routes/advLog');
 //User
 //user registration
 var usrReg = require('./routes/usrReg');
-//user login
+//user auth
 var usrLog = require('./routes/usrLog');
+var auth = require('./routes/auth');
 
 
 //TESTS
@@ -44,6 +45,7 @@ app.use('/registeradvisor', advReg);
 app.use('/register', usrReg);
 app.use('/login', usrLog);
 app.use('/loginadvisor', advLog);
+app.use('/auth', auth);
 
 app.use('/sqltest', le_test);
 app.use('/cooktest', cooktest);
