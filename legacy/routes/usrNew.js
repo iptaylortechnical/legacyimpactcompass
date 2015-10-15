@@ -10,7 +10,13 @@ router.post('/', function(req, res){
 	username = req.body.username;
 	password = req.body.password;
 	
-	
+	auth.newUser(username, password, function(){
+		res.writeHead(302, {
+		  'Location': 'login'
+		  //add other headers here...
+		});
+		res.end();
+	})
 	
 });
 

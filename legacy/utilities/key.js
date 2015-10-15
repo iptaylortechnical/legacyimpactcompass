@@ -1,4 +1,5 @@
 var pg = require('pg');
+var crypto = require('crypto');
 
 //TODO: FIX INVALID KEY CALLBACK
 
