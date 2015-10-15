@@ -16,6 +16,7 @@ var advLog = require('./routes/advLog');
 //User
 //user registration
 var usrReg = require('./routes/usrReg');
+var usrNew = require('./routes/usrNew');
 //user auth
 var usrLog = require('./routes/usrLog');
 var auth = require('./routes/auth');
@@ -24,6 +25,7 @@ var auth = require('./routes/auth');
 //TESTS
 var le_test = require('./sqltests/database');
 var cooktest = require('./tests/cookietest');
+var test = require('./tests/test');
 
 
 var app = express();
@@ -46,9 +48,11 @@ app.use('/register', usrReg);
 app.use('/login', usrLog);
 app.use('/loginadvisor', advLog);
 app.use('/auth', auth);
+app.use('/newuser', usrNew);
 
 app.use('/sqltest', le_test);
 app.use('/cooktest', cooktest);
+app.use('/test', test);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

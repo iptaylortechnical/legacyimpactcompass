@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
+var sqlizer = require('../utilities/sqlizer');
 
 router.post('/', function(req, res){
 	username = req.body.username;
@@ -8,26 +9,27 @@ router.post('/', function(req, res){
 	
 	results = [];
 	
-	sqlstr = 'SELECT password FROM users WHERE("username" = \''+ username +'\')';
+	pw_sqlstr = 'SELECT password FROM users WHERE("username" = \''+ username +'\')';
+	sI_sqlstr = 'SELECT sessionID FROM users WHERE("username" = \'' + username + '\')';
 	
-	pg.connect('postgres://localhost:5432', function(err, client, done){
-		var query = client.query(sqlstr);
+	sqlizer.sqlize(pw_sqlstr, function(results){
+		console.log(results);
+		pw = results[0].password;
 		
-    query.on('row', function(row) {
-        results.push(row);
-    });
-//
-//     // After all data is returned, close connection and return results
-    query.on('end', function() {
-        done();
-        if(password == results[0].password){
-					res.cookie('sessionID', password);
-        	res.send('authenticated <script>setTimeout(function(){window.location="/";}, 3000);</script>');
-        }else{
-        	res.send('incorrect');
-        }
-    });
-		
+    sqlizer.sqlize(sI_sqlstr, function(results){
+    	sI = results[0].sessionid;
+			
+	    if(password == pw){
+				res.cookie('sessionID', sI);
+				res.writeHead(302, {
+				  'Location': '/'
+				  //add other headers here...
+				});
+				res.end();
+	    }else{
+	    	res.send('incorrect');
+	    }
+    })
 	});
 	
 });
