@@ -160,7 +160,7 @@ form{
 }
 
 img{
-	height:60%;
+	height:300px;
 	margin:0 auto;
 	display:block;
 }
@@ -177,4 +177,22 @@ img{
 	margin:5px;
 	font-size:15;
 	color:grey;
+}
+
+.ticket {
+    display:block;
+		height:75px;
+		width:204px;
+		margin:0 auto;
+}
+
+.tickin {
+    width:32px;
+    height:32px;
+		float:left;
+		margin:1px;
+}
+
+.plsenter{
+	text-align:center;
 }

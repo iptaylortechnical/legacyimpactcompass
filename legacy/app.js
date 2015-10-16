@@ -18,6 +18,7 @@ var advLog = require('./routes/advLog');
 //user registration
 var usrReg = require('./routes/usrReg');
 var usrNew = require('./routes/usrNew');
+var usernameAvailable = require('./routes/available');
 //user auth
 var usrLog = require('./routes/usrLog');
 var auth = require('./routes/auth');
@@ -51,6 +52,7 @@ app.use('/advisorlogin', advLog);
 app.use('/auth', auth);
 app.use('/newuser', usrNew);
 app.use('/newadvisor', advNew);
+app.use('/check', usernameAvailable);
 
 app.use('/sqltest', le_test);
 app.use('/cooktest', cooktest);
