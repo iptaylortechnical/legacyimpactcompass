@@ -21,3 +21,7 @@ exports.newUser = function(username, password, done){
 		sqlizer.sqlize(sqlstr, function(d){done();});
 	})
 }
+
+exports.newAdvisor = function(username, password, ticket, done){
+	
+}
