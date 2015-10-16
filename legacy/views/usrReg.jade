@@ -1,8 +1,18 @@
 doctype html
 html(lang="en")
   head
+    title= pageTitle
+    link(href='/stylesheets/register.css')
   body
-    form(action='/newuser' method='POST')
-      input(name='username')
-      input(name='password')
-      input(type='submit')
+    .main
+      .header
+      .content
+        .left
+        .center
+          form(action='/newuser' method='POST')
+            input(name='username')
+            input(name='password')
+            input(name='ticket')
+            input(type='submit')
+        .right
+      .footer

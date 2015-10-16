@@ -47,7 +47,7 @@ app.use('/', routes);
 app.use('/registeradvisor', advReg);
 app.use('/register', usrReg);
 app.use('/login', usrLog);
-app.use('/loginadvisor', advLog);
+app.use('/advisorlogin', advLog);
 app.use('/auth', auth);
 app.use('/newuser', usrNew);
 app.use('/newadvisor', advNew);

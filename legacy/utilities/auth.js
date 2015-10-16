@@ -14,14 +14,19 @@ exports.isUser = function(session, callback){
 	
 }
 
-exports.newUser = function(username, password, done){
+exports.newUser = function(username, password, ticket, done){
 	key.createKey(function(k){
-		sqlstr = 'INSERT INTO "public"."users"("username", "password", "sessionid") VALUES(\'' + username + '\',\'' + password + '\',\'' + k + '\')';
+		sqlstr = 'INSERT INTO "public"."users"("username", "password", "sessionid", "advisorid") VALUES(\'' + username + '\',\'' + password + '\',\'' + k + '\', \'' + ticket + '\')';
 		
 		sqlizer.sqlize(sqlstr, function(d){done();});
 	})
 }
 
 exports.newAdvisor = function(username, password, ticket, done){
-	
+	key.createKey(function(k){
+		sqlstr = 'INSERT INTO "public"."advisor"("username", "password", "sessionid", "advisorid") VALUES(\'' + username + '\',\'' + password + '\',\'' + k + '\',\'' + ticket + '\')';
+		
+		sqlizer.sqlize(sqlstr, function(d){done();});
+	})
 }
+
