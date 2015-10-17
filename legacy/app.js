@@ -78,7 +78,7 @@ if (app.get('env') === 'development') {
 //       message: err.message,
 //       error: err
 //     });
-res.send('err');
+res.send(err.message);
   });
 }
 
@@ -86,11 +86,7 @@ res.send('err');
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-	res.send('err');
-  // res.render('error', {
-//     message: err.message,
-//     error: {}
-//   });
+	res.send(err.message);
 });
 
 
