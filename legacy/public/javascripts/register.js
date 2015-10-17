@@ -37,8 +37,13 @@ $(document).ready(function(){
 	});
 	
 	jQuery('#password').blur(function(){
-		setReady('password', true);
-		jQuery('#password').css('border', '2px solid #2ECC40');
+		if(jQuery('#password').val()){
+			setReady('password', true);
+			jQuery('#password').css('border', '2px solid #2ECC40');
+		}else{
+			setReady('password', false);
+			jQuery('#password').css('border', '2px solid #FF4136');
+		}
 	})
 	
 	for(i = 1; i < 6; i++){
