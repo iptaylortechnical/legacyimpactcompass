@@ -1,0 +1,23 @@
+html
+  head
+    title Register
+    link(rel='stylesheet', href='/stylesheets/login.css')
+    link(href='https://fonts.googleapis.com/css?family=Josefin+Slab', rel='stylesheet', type='text/css')
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+    script(src="/javascripts/login.js")
+  body
+    .header
+    .main
+      .content
+        .title Welcome to Legacy Impact Compass
+        .registerbox
+          .formcontainer
+            form(action="/auth" method="POST")
+              input#username(placeholder="username", autocomplete='off', name="username")
+              input#password(placeholder="password" type="password", autocomplete='off', name="password")
+              input(id="ticketinput" name="ticket" placeholder="ticket" type="hidden")
+              input#submit.submit(type="submit" disabled="true" value="Sign In")
+            a(href="/register") New here? Click to register
+    .footer
+      .copyright
+        | © 2015 ISAIAH TAYLOR

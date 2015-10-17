@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next){
-	res.render('usrLog');
+	res.render('usrLog_temp');
 })
 
 module.exports = router;

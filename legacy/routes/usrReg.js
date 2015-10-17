@@ -7,7 +7,7 @@ router.get('/', function(req, res, next){
 	
 	auth.isUser(session, function(good){
 		if(!good){
-			res.render('main');
+			res.render('usrReg');
 		}else{
 			res.writeHead(302, {
 			  'Location': '/'
