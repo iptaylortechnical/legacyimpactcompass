@@ -44,6 +44,7 @@ $(document).ready(function(){
 	for(i = 1; i < 6; i++){
 		jQuery("#" + i).keypress(function (k) {
 			k.preventDefault();
+			jQuery('#ticketinput').val('');
 			jQuery(':focus').html('');
 			jQuery(':focus').val(String.fromCharCode(k.keyCode).toUpperCase());
 			var ids = '#' + (parseInt(jQuery(':focus').attr('id'))+1);
@@ -82,6 +83,7 @@ function getTicket(str){
 			jQuery('#img').attr('src', imgurl);
 			jQuery('#advname').html(advname);
 			jQuery('#advtext').html(advtext);
+			jQuery('#ticketinput').val(str);
 			
 			setReady('ticket', true);
 		}else{
@@ -90,6 +92,7 @@ function getTicket(str){
 			jQuery('#img').attr('src', advDefaults._url);
 			jQuery('#advname').html(advDefaults._name);
 			jQuery('#advtext').html(advDefaults._text);
+			jQuery('#ticketinput').val('');
 			
 			setReady('ticket', false);
 		}
