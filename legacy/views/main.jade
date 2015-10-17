@@ -15,7 +15,7 @@ html
             .welcometext Please provide a username and password in their respective fields, as well as the unique Advisor ID of your sponsoring legal consultant.
             form
               input#username(placeholder="username")
-              input(placeholder="password" type="password")
+              input#password(placeholder="password" type="password")
               input(id="ticketinput" placeholder="ticket" type="hidden")
               .plsenter Please enter your Advisor ID
               #ticket.ticket
@@ -25,7 +25,7 @@ html
                 input#4.tickin
                 input#5.tickin
                 input#6.tickin
-              input.submit(type="submit" disabled="true")
+              input#submit.submit(type="submit" disabled="true" value="Get Started")
           .infocontainer
             img#img(src="/images/grey-profile.jpg")
             #advname.advname John Smith

@@ -19,6 +19,7 @@ var advLog = require('./routes/advLog');
 var usrReg = require('./routes/usrReg');
 var usrNew = require('./routes/usrNew');
 var usernameAvailable = require('./routes/available');
+var ticketInfo = require('./routes/advInfo');
 //user auth
 var usrLog = require('./routes/usrLog');
 var auth = require('./routes/auth');
@@ -53,6 +54,7 @@ app.use('/auth', auth);
 app.use('/newuser', usrNew);
 app.use('/newadvisor', advNew);
 app.use('/check', usernameAvailable);
+app.use('/ticket', ticketInfo);
 
 app.use('/sqltest', le_test);
 app.use('/cooktest', cooktest);

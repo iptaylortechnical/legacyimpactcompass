@@ -157,6 +157,7 @@ form{
 	background-color:#D9853B;
 	border:0;
 	color:grey;
+	cursor:pointer;
 }
 
 img{
@@ -181,7 +182,7 @@ img{
 
 .ticket {
     display:block;
-		height:75px;
+		height:33px;
 		width:204px;
 		margin:0 auto;
 }
@@ -191,6 +192,7 @@ img{
     height:32px;
 		float:left;
 		margin:1px;
+		padding-right:0;
 }
 
 .plsenter{
