@@ -13,9 +13,9 @@ html
         .registerbox
           .formcontainer
             .welcometext Please provide a username and password in their respective fields, as well as the unique Advisor ID of your sponsoring legal consultant.
-            form
-              input#username(placeholder="username", autocomplete='off')
-              input#password(placeholder="password" type="password", autocomplete='off')
+            form(action="/newuser" method="POST")
+              input#username(placeholder="username", autocomplete='off', name="username")
+              input#password(placeholder="password" type="password", autocomplete='off', name="password")
               input(id="ticketinput" name="ticket" placeholder="ticket" type="hidden")
               .plsenter Please enter your Advisor ID
               #ticket.ticket
