@@ -1,3 +1,9 @@
+var advDefaults = {
+	_url:'/images/grey-profile.jpg',
+	_name:'John Smith',
+	_text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi metus felis, porta ut mi vel, consectetur lobortis eros. Nam vel massa lacinia, pharetra massa in, dictum massa. Fusce dapibus tempus enim.'
+}
+
 var allReady = {
 	username:false,
 	password:false,
@@ -80,6 +86,11 @@ function getTicket(str){
 			setReady('ticket', true);
 		}else{
 			document.getElementById('ticket').style.border = '2px solid #FF4136';
+			
+			jQuery('#img').attr('src', advDefaults._url);
+			jQuery('#advname').html(advDefaults._name);
+			jQuery('#advtext').html(advDefaults._text);
+			
 			setReady('ticket', false);
 		}
 	});
@@ -92,5 +103,8 @@ function setReady(idstr, good){
 		console.log('test');
 		jQuery('#submit').removeAttr('disabled');
 		jQuery('#submit').css('color', 'white');
+	}else{
+		jQuery('#submit').attr('disabled', 'true');
+		jQuery('#submit').css('color', 'grey');
 	}
 }

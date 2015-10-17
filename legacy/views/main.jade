@@ -14,17 +14,17 @@ html
           .formcontainer
             .welcometext Please provide a username and password in their respective fields, as well as the unique Advisor ID of your sponsoring legal consultant.
             form
-              input#username(placeholder="username")
-              input#password(placeholder="password" type="password")
+              input#username(placeholder="username", autocomplete='off')
+              input#password(placeholder="password" type="password", autocomplete='off')
               input(id="ticketinput" placeholder="ticket" type="hidden")
               .plsenter Please enter your Advisor ID
               #ticket.ticket
-                input#1.tickin
-                input#2.tickin
-                input#3.tickin
-                input#4.tickin
-                input#5.tickin
-                input#6.tickin
+                input#1.tickin(placeholder="X", autocomplete='off')
+                input#2.tickin(placeholder="X", autocomplete='off')
+                input#3.tickin(placeholder="X", autocomplete='off')
+                input#4.tickin(placeholder="X", autocomplete='off')
+                input#5.tickin(placeholder="X", autocomplete='off')
+                input#6.tickin(placeholder="X", autocomplete='off')
               input#submit.submit(type="submit" disabled="true" value="Get Started")
           .infocontainer
             img#img(src="/images/grey-profile.jpg")
