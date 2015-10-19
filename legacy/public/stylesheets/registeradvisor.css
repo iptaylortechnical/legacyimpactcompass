@@ -115,17 +115,24 @@ img{
 }
 
 .advname{
-	margin-top:25px;
-	margin-bottom:10px;
+	height:35px;
+	width:90%;
+	margin:10 auto 10;
+	display:block;
 	font-size:25;
 	color:grey;
 	text-align:center;
+	outline:none;
 }
 
 .advtext{
-	margin:5px;
 	font-size:15;
 	color:grey;
+	outline:none;
+	width:90%;
+	margin:5px auto 5px;
+	display:block;
+	border:none;
 }
 
 .ticket {
@@ -152,4 +159,5 @@ img{
 	outline:none;
 	height:30px;
 	margin-top:10px;
+	margin-bottom:10px;
 }

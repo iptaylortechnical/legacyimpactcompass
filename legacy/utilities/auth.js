@@ -23,10 +23,20 @@ exports.newUser = function(username, password, ticket, done){
 }
 
 exports.newAdvisor = function(username, password, ticket, imgurl, samplename, sampletext, done){
-	key.createKey(function(k){
-		sqlstr = 'INSERT INTO "public"."advisor"("username", "password", "sessionid", "advisorid", "imgurl", "samplename", "sampletext") VALUES(\'' + username + '\',\'' + password + '\',\'' + k + '\',\'' + ticket + '\', \'' + imgurl + '\', \'' + samplename + '\', \'' + sampletext + '\')';
+	
+	sqlstr = 'UPDATE "public"."tickets" SET "username" = \'' + username + '\' WHERE("ticket" = \'' + ticket + '\')';
+	
+	sqlizer.sqlize(sqlstr, function(d){
+		sqlstr = 'UPDATE "public"."tickets" SET "usable" = \'FALSE\' WHERE("ticket" = \'' + ticket + '\')';
+	
+		sqlizer.sqlize(sqlstr, function(d){
+			key.createKey(function(k){
+				sqlstr = 'INSERT INTO "public"."advisor"("username", "password", "sessionid", "advisorid", "imgurl", "samplename", "sampletext") VALUES(\'' + username + '\',\'' + password + '\',\'' + k + '\',\'' + ticket + '\', \'' + imgurl + '\', \'' + samplename + '\', \'' + sampletext + '\')';
 		
-		sqlizer.sqlize(sqlstr, function(d){done();});
-	})
+				sqlizer.sqlize(sqlstr, function(d){done();});
+			})
+		});
+	});
+	
 }
 

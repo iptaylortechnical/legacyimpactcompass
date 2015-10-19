@@ -12,6 +12,7 @@ var routes = require('./routes/index');
 var advReg = require('./routes/advReg');
 var advNew = require('./routes/advNew');
 var checkAdv = require('./routes/checkAdv');
+var ticketAvailable = require('./routes/ticketAvailable');
 //advisor login
 var advLog = require('./routes/advLog');
 
@@ -57,6 +58,7 @@ app.use('/newadvisor', advNew);
 app.use('/check', usernameAvailable);
 app.use('/ticket', ticketInfo);
 app.use('/checkadv', checkAdv);
+app.use('/ticketavailable', ticketAvailable);
 
 app.use('/sqltest', le_test);
 app.use('/cooktest', cooktest);

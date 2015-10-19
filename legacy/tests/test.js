@@ -3,7 +3,7 @@ var router = express.Router();
 var sqlizer = require('../utilities/sqlizer');
 
 router.get('/', function(req, res, next){
-	sqlizer.sqlize('SELECT "username","password" FROM "public"."users" WHERE ("id"  = 1)', function(k){
+	sqlizer.sqlize('SELECT "username" FROM "public"."tickets" WHERE ("ticket"  = \'RASHLY\')', function(k){
 		res.send(k);
 	});
 });
