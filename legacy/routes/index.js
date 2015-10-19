@@ -13,11 +13,21 @@ router.get('/', function(req, res, next) {
 			console.log('yep');
 			res.send(session);
 		}else{
-			res.writeHead(302, {
-			  'Location': 'login'
-			  //add other headers here...
+			auth.isAdvisor(session, function(good){
+				if(good){
+					res.writeHead(302, {
+					  'Location': 'advisor'
+					  //add other headers here...
+					});
+					res.end();
+				}else{
+					res.writeHead(302, {
+					  'Location': 'login'
+					  //add other headers here...
+					});
+					res.end();
+				}
 			});
-			res.end();
 		}
 	});
 	
