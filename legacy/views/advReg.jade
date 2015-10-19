@@ -2,8 +2,16 @@ doctype html
 html(lang="en")
   head
   body
-    form(action='/newadvisor' method='POST')
+    form(action='/newadvisor' method='POST') username:
       input(name='username')
+      | password:
       input(name='password')
+      | ticket:
       input(name='ticket')
+      | url for pic:
+      input(name='imgurl')
+      | name:
+      input(name='samplename')
+      | text:
+      input(name='sampletext')
       input(type='submit')

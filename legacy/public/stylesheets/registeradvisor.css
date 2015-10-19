@@ -1,0 +1,155 @@
+body{
+	background-color:#ECECEA;
+	margin-left:20px;
+	margin-right:20px;
+	font-family: 'Josefin Slab', serif;
+}
+
+.header{
+	display: -webkit-inline-flex;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	background-color:transparent;
+	width:100%;
+	height:85px;
+	border-bottom:2px solid white;
+}
+
+.main{
+	background-color:transparent;
+	width:100%;
+	height:80%;
+	border-bottom:2px solid white;
+	padding-bottom:15px;
+	margin-top:15px;
+}
+
+.content{
+	padding-left:5px;
+	background-color:inherit;
+	border-left:2px solid white;
+	border-right:2px solid white;
+	width:85%;
+	margin:0 auto;
+	height:100%;
+	overflow-y:scroll;
+}
+
+.title{
+	font-size:30px;
+	font-family: 'Josefin Slab', serif;
+	padding-top:10px;
+	text-align:center;
+	background:transparent;
+	margin-bottom:40px;
+}
+
+p{
+	font-family: 'Josefin Slab', serif;
+	font-size:19;
+}
+
+a{
+	font-family: 'Josefin Slab', serif;
+}
+
+.copyright{
+	padding-top:10px;
+	text-align:center;
+	margin:0 auto;
+	font-size:10;
+}
+
+.registerbox{
+	width:100%;
+	height:450px;
+}
+
+.formcontainer{
+	height:100%;
+	width:50%;
+	float:left;
+	border-right:2px solid white;
+}
+
+.infocontainer{
+	height:100%;
+	width:49%;
+	float:right;
+}
+
+input{
+  outline: none;
+  border: 1px solid ghostwhite;
+  box-shadow: none;
+  font-size: 18;
+  display: block;
+  margin: 30 auto 30;
+	padding:10px;
+	width:60%;
+}
+
+.welcometext{
+	font-size:20px;
+	margin-bottom: 30px;
+	
+}
+
+form{
+	width:80%;
+	margin:0 auto;
+	border:2px solid #74AFAD;
+}
+
+.submit{
+	background-color:#D9853B;
+	border:0;
+	color:grey;
+	cursor:pointer;
+}
+
+img{
+	height:275px;
+	margin:0 auto;
+	display:block;
+}
+
+.advname{
+	margin-top:25px;
+	margin-bottom:10px;
+	font-size:25;
+	color:grey;
+	text-align:center;
+}
+
+.advtext{
+	margin:5px;
+	font-size:15;
+	color:grey;
+}
+
+.ticket {
+    display:block;
+		height:33px;
+		width:204px;
+		margin:0 auto;
+}
+
+.tickin {
+    width:32px;
+    height:32px;
+		float:left;
+		margin:1px;
+		padding-right:0;
+}
+
+.plsenter{
+	text-align:center;
+}
+
+.imgsrc{
+	border:none;
+	outline:none;
+	height:30px;
+	margin-top:10px;
+}

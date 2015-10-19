@@ -1,0 +1,39 @@
+html
+  head
+    title Register
+    link(rel='stylesheet', href='/stylesheets/registeradvisor.css')
+    link(href='https://fonts.googleapis.com/css?family=Josefin+Slab', rel='stylesheet', type='text/css')
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+    script(src="/javascripts/registeradvisor.js")
+  body
+    .header
+    .main
+      .content
+        .title Welcome to Legacy Impact Compass
+        .registerbox
+          .formcontainer
+            .welcometext Please create a username and password and provide the unique Advisor ID of your sponsoring legal consultant.
+            form(action="/newadvisor" method="POST")
+              input#username(placeholder="username", autocomplete='off', name="username")
+              input#password(placeholder="password" type="password", autocomplete='off', name="password")
+              input#ticketinput(name="ticket" placeholder="ticket" type="hidden")
+              input#imgurl(name="imgurl" type="hidden")
+              input#samplename(name="samplename" type="hidden")
+              input#sampletext(name="sampletext" type="hidden")
+              .plsenter Please enter your Advisor ID
+              #ticket.ticket
+                input#1.tickin(placeholder="X", autocomplete='off')
+                input#2.tickin(placeholder="X", autocomplete='off')
+                input#3.tickin(placeholder="X", autocomplete='off')
+                input#4.tickin(placeholder="X", autocomplete='off')
+                input#5.tickin(placeholder="X", autocomplete='off')
+                input#6.tickin(placeholder="X", autocomplete='off')
+              input#submit.submit(type="submit" disabled="true" value="Get Started")
+          .infocontainer
+            img#img(src="/images/grey-profile.jpg")
+            input#imgsrc.imgsrc(placeholder='www.example.com/img.jpg')
+            #advname.advname(contenteditable='true') John Smith
+            #advtext.advtext(contenteditable='true') Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi metus felis, porta ut mi vel, consectetur lobortis eros. Nam vel massa lacinia, pharetra massa in, dictum massa. Fusce dapibus tempus enim.
+    .footer
+      .copyright
+        | © 2015 ISAIAH TAYLOR

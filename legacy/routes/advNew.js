@@ -10,8 +10,11 @@ router.post('/', function(req, res){
 	username = req.body.username;
 	password = req.body.password;
 	ticket = req.body.ticket;
+	imgurl = req.body.imgurl;
+	samplename = req.body.samplename;
+	sampletext = req.body.sampletext;
 	
-	auth.newAdvisor(username, password, ticket, function(){
+	auth.newAdvisor(username, password, ticket, imgurl, samplename, sampletext, function(){
 		res.writeHead(302, {
 		  'Location': 'advisorlogin'
 		  //add other headers here...
