@@ -11,6 +11,9 @@ var allReady = {
 }
 
 $(document).ready(function(){
+	
+	jQuery('#imgsrc').
+	
 	jQuery('#username').blur(function(){
 		var ob = jQuery('#username');
 
