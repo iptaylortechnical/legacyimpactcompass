@@ -44,8 +44,11 @@ exports.newAdvisor = function(username, password, ticket, imgurl, samplename, sa
 	
 		sqlizer.sqlize(sqlstr, function(d){
 			key.createKey(function(k){
+				
 				sqlstr = 'INSERT INTO "public"."advisor"("username", "password", "sessionid", "advisorid", "imgurl", "samplename", "sampletext") VALUES(\'' + username + '\',\'' + password + '\',\'' + k + '\',\'' + ticket + '\', \'' + imgurl + '\', \'' + samplename + '\', \'' + sampletext + '\')';
-		
+				
+				//console.log(sqlstr);
+				
 				sqlizer.sqlize(sqlstr, function(d){done();});
 			})
 		});

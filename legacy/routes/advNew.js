@@ -14,6 +14,8 @@ router.post('/', function(req, res){
 	samplename = req.body.samplename;
 	sampletext = req.body.sampletext;
 	
+	//TODO: FIX "'" CHARACTER ESCAPING
+	
 	auth.newAdvisor(username, password, ticket, imgurl, samplename, sampletext, function(){
 		res.writeHead(302, {
 		  'Location': 'advisorlogin'
