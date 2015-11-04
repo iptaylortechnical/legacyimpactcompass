@@ -20,6 +20,7 @@ var authAdv = require('./routes/authadvisor');
 var advisor = require('./routes/advisor');
 
 //User
+var usrHome = require('./routes/home');
 //user registration
 var usrReg = require('./routes/usrReg');
 var usrNew = require('./routes/usrNew');
@@ -64,6 +65,7 @@ app.use('/checkadv', checkAdv);
 app.use('/ticketavailable', ticketAvailable);
 app.use('/authadvisor', authAdv);
 app.use('/advisor', advisor);
+app.use('/home', usrHome);
 
 app.use('/sqltest', le_test);
 app.use('/cooktest', cooktest);
