@@ -1,0 +1,24 @@
+html
+  head
+    link(rel="stylesheet" href="/stylesheets/progress-wizard.min.css")
+    link(rel='stylesheet' href='/stylesheets/question.css')
+    script(src='/javascripts/question.js')
+  body
+    ul(class="progress-indicator")
+      li(class='#{val1}')
+        span(class="bubble")
+        | STEP 1
+      li(class='#{val2}')
+        span(class="bubble")
+        | STEP 2
+      li(class='#{val3}')
+        span(class="bubble")
+        | STEP 3
+      li(class='#{val4}')
+        span(class="bubble")
+        | STEP 4
+    .controllers
+      .btn.back(onclick='goPrev("#{part}")')
+        | BACK
+      .btn.next(onclick='goNext("#{part}")')
+        | NEXT

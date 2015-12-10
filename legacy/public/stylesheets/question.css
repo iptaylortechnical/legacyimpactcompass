@@ -1,0 +1,23 @@
+.btn{
+	background-color:#65D074;
+	height:75px;
+	width:250px;
+	color:white;
+	text-align:center;
+	font-size:68px;
+	border-radius:2px;
+	cursor:pointer;
+	margin-right:1px;
+	/*display:inline-block;*/
+}
+
+.controllers{
+	margin:500 auto 0;
+	display:flex;
+	height:77px;
+	width:502px;
+}
+
+.back{
+	background-color:#BBBBBB;
+}

@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 
+//endpoints
+var queryEnd = require('./routes/queryEnd');
+
 //Advisor
 //advisor registration
 var advReg = require('./routes/advReg');
@@ -35,7 +38,6 @@ var auth = require('./routes/auth');
 var le_test = require('./sqltests/database');
 var cooktest = require('./tests/cookietest');
 var test = require('./tests/test');
-
 
 var app = express();
 
@@ -66,6 +68,7 @@ app.use('/ticketavailable', ticketAvailable);
 app.use('/authadvisor', authAdv);
 app.use('/advisor', advisor);
 app.use('/home', usrHome);
+app.use('/q', queryEnd);
 
 app.use('/sqltest', le_test);
 app.use('/cooktest', cooktest);
