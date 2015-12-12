@@ -79,7 +79,7 @@ a{
 
 input{
   outline: none;
-  border: 1px solid ghostwhite;
+  border: 1px solid #BBBBBB;
   box-shadow: none;
   font-size: 18;
   display: block;
@@ -91,13 +91,13 @@ input{
 .welcometext{
 	font-size:20px;
 	margin-bottom: 30px;
-	
+	margin-left:10px;
 }
 
 form{
 	width:80%;
 	margin:0 auto;
-	border:2px solid #65D074;
+/*	border:2px solid #65D074;*/
 }
 
 .submit{

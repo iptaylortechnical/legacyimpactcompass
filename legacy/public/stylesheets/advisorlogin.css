@@ -1,5 +1,5 @@
 body{
-	background-color:#ECECEA;
+	background-color:white;
 	margin-left:20px;
 	margin-right:20px;
 	font-family: 'Josefin Slab', serif;
@@ -70,7 +70,7 @@ a{
 
 input{
   outline: none;
-  border: 1px solid ghostwhite;
+  border: 1px solid #BBBBBB;
   box-shadow: none;
   font-size: 18;
   display: block;

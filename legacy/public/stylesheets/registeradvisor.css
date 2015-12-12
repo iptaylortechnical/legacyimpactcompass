@@ -91,13 +91,13 @@ input{
 .welcometext{
 	font-size:20px;
 	margin-bottom: 30px;
-	
+	margin-left:10px;
 }
 
 form{
 	width:80%;
 	margin:0 auto;
-	border:2px solid #65D074;
+/*	border:2px solid #65D074;*/
 }
 
 .submit{
