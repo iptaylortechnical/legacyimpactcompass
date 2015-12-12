@@ -1,23 +1,27 @@
 .btn{
 	background-color:#65D074;
-	height:75px;
+	height:50px;
 	width:250px;
 	color:white;
 	text-align:center;
-	font-size:68px;
+	font-size:42px;
 	border-radius:2px;
 	cursor:pointer;
 	margin-right:1px;
+	font-family: 'Josefin Slab', serif;
 	/*display:inline-block;*/
+	padding-top:13px;
 }
 
 .controllers{
-	margin:500 auto 0;
 	display:flex;
-	height:77px;
-	width:502px;
 }
 
 .back{
 	background-color:#BBBBBB;
+}
+
+.btncont{
+	display:inherit;
+	margin:550 auto;
 }

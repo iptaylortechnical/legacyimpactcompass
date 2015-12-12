@@ -144,3 +144,31 @@ img{
 .plsenter{
 	text-align:center;
 }
+
+.taketest{
+	text-decoration:none;
+	border:none;
+	background-color:#D9853B;
+	color:white;
+	width:200px;
+	height:50px;
+	font-size:30px;
+	font-weight:100;
+	margin:200 auto;
+	cursor:pointer;
+	display:block;
+}
+
+a{
+	text-decoration:none;
+}
+
+.taketest:active{
+	box-shadow:none;
+}
+
+.taketest:focus{
+	border:none;
+	box-shadow:none;
+	outline:none;
+}

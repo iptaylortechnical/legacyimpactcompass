@@ -2,6 +2,7 @@ html
   head
     link(rel="stylesheet" href="/stylesheets/progress-wizard.min.css")
     link(rel='stylesheet' href='/stylesheets/question.css')
+    link(href='https://fonts.googleapis.com/css?family=Josefin+Slab', rel='stylesheet', type='text/css')
     script(src='/javascripts/question.js')
   body
     ul(class="progress-indicator")
@@ -18,7 +19,8 @@ html
         span(class="bubble")
         | STEP 4
     .controllers
-      .btn.back(onclick='goPrev("#{part}")')
-        | BACK
-      .btn.next(onclick='goNext("#{part}")')
-        | NEXT
+      .btncont
+        .btn.back(onclick='goPrev("#{part}")')
+          | BACK
+        .btn.next(onclick='goNext("#{part}")')
+          | NEXT

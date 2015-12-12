@@ -11,7 +11,11 @@ router.get('/', function(req, res, next) {
 	auth.isUser(session, function(good){
 		if(good){
 			console.log('yep');
-			res.send(session);
+			res.writeHead(302, {
+			  'Location': 'home'
+			  //add other headers here...
+			});
+			res.end();
 		}else{
 			auth.isAdvisor(session, function(good){
 				if(good){

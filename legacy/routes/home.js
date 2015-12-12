@@ -13,7 +13,7 @@ router.get('/', function(req, res){
 	auth.isUser(session, function(good){
 		if(good){
 			console.log('yep');
-			res.advisor('advisor');
+			res.render('home');
 		}else{
 			auth.isAdvisor(session, function(good){
 				if(good){
