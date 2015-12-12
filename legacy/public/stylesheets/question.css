@@ -22,6 +22,25 @@
 }
 
 .btncont{
-	display:inherit;
-	margin:550 auto;
+	display:inline-flex;
+/*	margin:550 auto;*/
+}
+
+.contentcont{
+	display:block;
+	width:100%;
+}
+
+.btnmaster{
+	margin:0 auto;
+	width:501px;
+}
+
+p{
+	font-family: 'Josefin Slab', serif;
+	font-size:19;
+}
+
+.m{
+	overflow-y:scroll;
 }
