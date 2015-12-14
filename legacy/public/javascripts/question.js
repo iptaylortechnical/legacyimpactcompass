@@ -12,3 +12,14 @@ function goPrev(goto){
 		document.location = "/q?p=" + yo;
 	}
 }
+
+$(document).ready(function(){
+	
+	$('.next').css('background-color', '#BBBBBB');
+	
+	jQuery('.choice').click(function(){
+		$(this).css('color', 'grey')
+		$(this).css('border', '1px solid lightgreen')
+		$('.next').css('background-color', '#65D074');
+	})
+})

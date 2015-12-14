@@ -5,6 +5,39 @@ router.post('/', function(req, res){
 	res.send('get only');
 });
 
+var qBank = [
+	'How many children do you have?',
+	'What is the number of blahs?',
+	'What kind of icecream do you like?',
+	'What is your favorite color?'
+];
+
+var aBank = [
+	[
+		'one',
+		'two',
+		'three'
+	],
+	
+	[
+		'six',
+		'two',
+		'four'
+	],
+	
+	[
+		'mint',
+		'caramel',
+		'pb'
+	],
+	
+	[
+		'red',
+		'blue',
+		'green'
+	]
+];
+
 router.get('/', function(req, res){
 	
 	var parts = ['first', 'second', 'third', 'fourth'];
@@ -37,6 +70,11 @@ router.get('/', function(req, res){
 			for(var i = 0; i < part; i++){
 				progress[progressB[i]] = "completed";
 			}
+			
+			progress.prompt = qBank[part-1];
+			progress.first = aBank[part-1][0];
+			progress.second = aBank[part-1][1];
+			progress.third = aBank[part-1][2];
 			
 			res.render('question', progress);
 		}else{
