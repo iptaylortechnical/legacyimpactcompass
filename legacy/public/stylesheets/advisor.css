@@ -144,3 +144,21 @@ img{
 .plsenter{
 	text-align:center;
 }
+
+.clientbox{
+	margin-left:20px;
+}
+
+.topline{
+	border:none;
+	height:2px;
+	background-color:#BBBBBB;
+}
+
+.client{
+	display:inline-flex;
+}
+
+.cldescript{
+	width:33%;
+}
