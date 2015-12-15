@@ -157,8 +157,33 @@ img{
 
 .client{
 	display:inline-flex;
+	width:100%;
+	border-radius:2px;
+	padding-left:10px;
+	transition: background-color .5s ease;
+}
+
+.client:hover{
+	background-color:lightgray;
 }
 
 .cldescript{
 	width:33%;
+}
+
+.minititle{
+	font-size:21px;
+}
+
+.ico{
+	float:right;
+	margin-right:10px;
+}
+
+.yes{
+	color:#65D074;
+}
+
+.no{
+	color:#BBBBBB;
 }

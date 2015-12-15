@@ -4,13 +4,15 @@ html
     link(rel='stylesheet', href='/stylesheets/advisor.css')
     link(href='https://fonts.googleapis.com/css?family=Josefin+Slab', rel='stylesheet', type='text/css')
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet")
   body
     .header
       .title Legacy Impact Compass
     .main
       .content
         .registerbox
-          p
+          p.minititle
             | Current Clients
           hr.topline
           .clientbox
@@ -19,6 +21,17 @@ html
                 | First client
               p.cldescript
                 | asdfjdasdfasdhfasdgaksdf
+              p.iconcont.cldescript
+               i.material-icons.ico.no
+                  | check_circle
+            .client
+              p.cldescript
+                | Second client
+              p.cldescript
+                | asdlkfdhyasddgjjjgasd
+              p.iconcont.cldescript
+               i.material-icons.ico.yes
+                  | check_circle
     .footer
       .copyright
         | © 2015 ISAIAH TAYLOR
