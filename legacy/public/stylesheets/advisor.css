@@ -160,7 +160,8 @@ img{
 	width:100%;
 	border-radius:2px;
 	padding-left:10px;
-	transition: background-color .5s ease;
+	transition: background-color .3s ease;
+	cursor:pointer;
 }
 
 .client:hover{
@@ -186,4 +187,8 @@ img{
 
 .no{
 	color:#BBBBBB;
+}
+
+.nomen{
+	float:right;
 }
