@@ -6,6 +6,7 @@ html
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
     link(href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet")
+    script(src="/javascripts/advisor.js" type="text/javascript")
   body
     .nomen Welcome, #{user} | Log Out
     .header
@@ -17,22 +18,26 @@ html
             | Current Clients
           hr.topline
           .clientbox
-            .client
-              p.cldescript
-                | First client
-              p.cldescript
-                | asdfjdasdfasdhfasdgaksdf
-              p.iconcont.cldescript
-               i.material-icons.ico.no
-                  | check_circle
-            .client
-              p.cldescript
-                | Second client
-              p.cldescript
-                | asdlkfdhyasddgjjjgasd
-              p.iconcont.cldescript
-               i.material-icons.ico.yes
-                  | check_circle
+            #1.client
+              .clientcontainer
+                p.cldescript
+                  | First client
+                p.cldescript
+                  | asdfjdasdfasdhfasdgaksdf
+                p.iconcont.cldescript
+                 i.material-icons.ico.no
+                    | check_circle
+              #1d.dropdown
+            #2.client
+              .clientcontainer
+                p.cldescript
+                  | Second client
+                p.cldescript
+                  | asdlkfdhyasddgjjjgasd
+                p.iconcont.cldescript
+                 i.material-icons.ico.yes
+                    | check_circle
+              #2d.dropdown
     .footer
       .copyright
         | © 2015 ISAIAH TAYLOR
