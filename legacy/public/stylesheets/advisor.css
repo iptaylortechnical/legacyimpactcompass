@@ -160,12 +160,8 @@ img{
 	width:100%;
 	border-radius:2px;
 	padding-left:10px;
-	transition: background-color .3s ease;
+	transition: background-color .3s ease-in-out;
 	cursor:pointer;
-}
-
-.client:hover{
-	background-color:lightgray;
 }
 
 .cldescript{
@@ -202,7 +198,20 @@ img{
 	overflow:hidden;
 	max-height:0;
 	height:40px;
-	width:100%;
 	padding-right:20px;
-	transition: max-height .3s ease;
+	transition: max-height .5s ease-in-out;
+}
+
+.status{
+	margin:0;
+	margin-top:10px;
+	text-align:center;
+}
+
+.clienthr{
+	border:none;
+	height:1px;
+	width:90%;
+	margin:0 auto;
+	background-color:#BBBBBB;
 }
