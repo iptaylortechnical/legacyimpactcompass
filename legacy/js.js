@@ -13,7 +13,9 @@ test =
 		names: [
 			"First Question", 
 			"Second Question"
-		]
+		],
+		nomen: "masterswitch",
+		address: "none"
 	},
 	q1: {
 		info: {
@@ -27,7 +29,9 @@ test =
 				"first answer",
 				"second answer",
 				"third answer"
-			]
+			],
+			nomen: "First Question",
+			address: "q1"
 		},
 		fA: "first",
 		sA: "second",
@@ -43,7 +47,9 @@ test =
 					"laughing eut loud",
 					"wrecked",
 					"all the stalls"
-				]
+				],
+				nomen: "third answer",
+				address: "q1.tA"
 			},
 			lel: "mmhmm",
 			reqt: "done got",
@@ -62,7 +68,9 @@ test =
 				"first answer",
 				"second answer",
 				"third answer"
-			]
+			],
+			nomen: "Second Question",
+			address: "q2"
 		},
 		fA: "irst",
 		sA: "scond",
