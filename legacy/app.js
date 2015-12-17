@@ -32,6 +32,7 @@ var ticketInfo = require('./routes/advInfo');
 //user auth
 var usrLog = require('./routes/usrLog');
 var auth = require('./routes/auth');
+var logout = require('./routes/logout');
 
 
 //TESTS
@@ -59,6 +60,7 @@ app.use('/register', usrReg);
 app.use('/login', usrLog);
 app.use('/advisorlogin', advLog);
 app.use('/auth', auth);
+app.use('/logout', logout);
 app.use('/newuser', usrNew);
 app.use('/newadvisor', advNew);
 app.use('/check', usernameAvailable);
