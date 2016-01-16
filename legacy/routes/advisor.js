@@ -13,7 +13,9 @@ router.get('/', function(req, res){
 	
 	session = req.cookies.sessionID || '';
 	
-	auth.isAdvisor(session, function(lel){
+	auth.isAdvisor(session, function(err, lel){
+		if(err)console.log("isUser err: " + err);
+		
 		//key authenticated
 		if(lel){
 			
@@ -26,6 +28,7 @@ router.get('/', function(req, res){
 				}
 			})
 		}else{
+			console.log(session);
 			auth.isUser(session, function(good){
 				if(good){
 					res.writeHead(302, {

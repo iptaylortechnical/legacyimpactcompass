@@ -14,26 +14,24 @@ router.get('/', function(req, res){
 	auth.isUser(session, function(err, good){
 		if(err)console.log("isUser error: " + err);
 		if(good){
-			console.log('yep');
 			res.render('home');
 		}else{
-			res.send('yo');
-			// auth.isAdvisor(session, function(err, good){
-// 				if(err)console.log("isAdvisor error: " + err);
-// 				if(good){
-// 					res.writeHead(302, {
-// 					  'Location': 'advisor'
-// 					  //add other headers here...
-// 					});
-// 					res.end();
-// 				}else{
-// 					res.writeHead(302, {
-// 					  'Location': 'login'
-// 					  //add other headers here...
-// 					});
-// 					res.end();
-// 				}
-// 			});
+			auth.isAdvisor(session, function(err, good){
+				if(err)console.log("isAdvisor error: " + err);
+				if(good){
+					res.writeHead(302, {
+					  'Location': 'advisor'
+					  //add other headers here...
+					});
+					res.end();
+				}else{
+					res.writeHead(302, {
+					  'Location': 'login'
+					  //add other headers here...
+					});
+					res.end();
+				}
+			});
 		}
 	});
 })

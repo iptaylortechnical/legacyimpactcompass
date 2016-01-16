@@ -50,6 +50,7 @@ exports.isAdvisor = function(session, callback){
 		var advisors = db.get('advisors');
 		
 		advisors.find({"sessionid": session}, 'username', function(e, docs){
+			console.log(docs);
 			var isGood;
 			
 			if(!!docs[0]){
