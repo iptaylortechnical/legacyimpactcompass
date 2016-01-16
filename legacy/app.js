@@ -8,9 +8,14 @@ var bodyParser = require('body-parser');
 //DB
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017');
+var db = monk('localhost:27017/local');
+
+//APP
+var app = express();
 
 
+//expose db instance to all endpoints
+//TODO: THIS IS SUBOPTIMAL. IN THE FUTURE, EXPOSE ONLY TO AUTH.JS ETC
 app.use(function(req, res, next){
 	req.db = db;
 	next();
@@ -51,8 +56,6 @@ var logout = require('./routes/logout');
 var le_test = require('./sqltests/database');
 var cooktest = require('./tests/cookietest');
 var test = require('./tests/test');
-
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

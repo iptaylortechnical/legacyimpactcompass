@@ -1,12 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var auth = require('../utilities/auth');
+var auth;
 
 router.get('/', function(req, res, next){
 	res.send('POST only');
 });
 
 router.post('/', function(req, res){
+	
+	auth = require('../utilities/auth').setDB(req.db);
+	
 	username = req.body.username;
 	password = req.body.password;
 	ticket = req.body.ticket;

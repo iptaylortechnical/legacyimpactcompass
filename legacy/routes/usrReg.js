@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var auth = require('../utilities/auth');
+var auth;
 
 router.get('/', function(req, res, next){
+	
+	auth = require('../utilities/auth').setDB(req.db);
+	
 	session = req.cookies.sessionID || '';
 	
 	auth.isUser(session, function(good){

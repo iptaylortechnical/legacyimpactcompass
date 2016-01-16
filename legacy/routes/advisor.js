@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var auth = require('../utilities/auth');
+var auth;
 var userinfo = require('../utilities/userinfo');
 
 router.post('/', function(req, res){
@@ -9,13 +9,15 @@ router.post('/', function(req, res){
 
 router.get('/', function(req, res){
 	
+	auth = require('../utilities/auth').setDB(req.db);
+	
 	session = req.cookies.sessionID || '';
 	
 	auth.isAdvisor(session, function(lel){
 		//key authenticated
 		if(lel){
 			
-			userinfo.advisor(session, function(response){
+			userinfo.advisor(session, req.db, function(response){
 				
 				console.log(response);
 				

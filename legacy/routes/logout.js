@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var pg = require('pg');
-var sqlizer = require('../utilities/sqlizer');
 
 router.post('/', function(req, res){
 	res.send('GET only');
