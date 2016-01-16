@@ -1,5 +1,6 @@
 var sqlizer = require('./sqlizer');
 var key = require('./key');
+var monk = require('monk');
 
 exports.isUser = function(session, callback){
 	sqlstr = 'SELECT username FROM "public"."users" WHERE ("sessionid" = \''+ session +'\')';
