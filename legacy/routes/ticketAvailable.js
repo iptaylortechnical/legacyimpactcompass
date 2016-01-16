@@ -12,8 +12,8 @@ router.get('/', function(req, res, next){
 	var db = req.db;
 	var tickets = db.get('tickets');
 	
-	tickets.find({ticket:request}, 'username', function(e, d){
-		res.send(!!d[0] ? '0' : '1');
+	tickets.find({ticket:request}, 'usable', function(e, d){
+		res.send(!!d[0].usable ? '1' : '0');
 	})
 	
 	//TODO: PHASE OUT
