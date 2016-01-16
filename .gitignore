@@ -1,2 +1,4 @@
 *.0000000001
 *.0000000002
+tests/mon/diagnostic.data/
+tests/mon/journal/
