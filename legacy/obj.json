@@ -1,0 +1,59 @@
+{
+	"qid": "how-many-children",
+	"title": "How many children do you have?",
+	"description": "Please select the number of children you have.",
+	"answers": [
+		{
+			"description": "5 children",
+			"answer": 5,
+			"offspring": {
+				"hasChildren": true,
+				"childCount": 2
+			},
+			"children": [
+				{
+					"quid": "kind-of-tacos",
+					"title": "What kind of tacos?",
+					"description": "What kind of tacos do you prefer?",
+					"answers": [
+						{
+							"description": "meat taco",
+							"answer": "meat",
+							"offspring": {
+								"hasChildren": false
+							}
+						},
+						{
+							"description": "veggie taco",
+							"answer": "veggie",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				},
+				{
+					"quid": "kind-of-subs",
+					"title": "What kind of subs?",
+					"description": "What kind of subway sandwhiches do they like?",
+					"answers": [
+						{
+							"description": "meatball sub sandwhich",
+							"answer": "meatball",
+							"offspring": {
+								"hasChildren": false
+							}
+						},
+						{
+							"description": "chicken bacon ranch melt sub sandwhich",
+							"answer": "cbrm",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var http = require('http');
 
 //DB
 var mongo = require('mongodb');
@@ -13,6 +14,52 @@ var db = monk('localhost:27017/local');
 //APP
 var app = express();
 
+var testroute = require('./realtime');
+app.use('/realtime', testroute);
+
+// var io = app.get('io');
+//
+// io.on('connection', function(socket){
+// 	console.log('connection received');
+// })
+
+lotsofclients = [];
+id = 0;
+
+app.lel = function(io){
+	io.on('connection', function(socket){
+		socket.yourid = id;
+		id++;
+		lotsofclients.push(socket);
+		console.log('connection received');
+		io.emit('Server 2 Client Message', 'Welcome!' );
+
+		    socket.on('Client 2 Server Message', function(message)      {
+		        console.log(message + socket.yourid);
+		        io.emit('Server 2 Client Message', message.toUpperCase() );     //upcase it
+		    });
+	})
+}
+
+var on = function(m){
+	var dataLocation = socket.location;
+	var data = socket.data;
+	
+	var question = getLocation(dataLocation, data);
+	var qid = question.qid;
+	
+	
+}
+
+function getLocation(q, data) {
+	var parts = q.split('.');
+	var newData = data[parts[0]];
+	for(var i = 1; i < parts.length; i++){
+		newData = newData[parts[i]];
+	}
+	
+	return newData;
+}
 
 //expose db instance to all endpoints
 //TODO: THIS IS SUBOPTIMAL. IN THE FUTURE, EXPOSE ONLY TO AUTH.JS ETC

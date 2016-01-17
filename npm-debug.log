@@ -2,17 +2,18 @@
 1 verbose cli [ 'node', '/usr/local/bin/npm', 'start' ]
 2 info using npm@2.10.1
 3 info using node@v0.12.4
-4 verbose stack Error: ENOENT, open '/Users/Isaiah/Desktop/Coding/legacy/src/legacyimpactcompass/package.json'
-4 verbose stack     at Error (native)
-5 verbose cwd /Users/Isaiah/Desktop/Coding/legacy/src/legacyimpactcompass
-6 error Darwin 15.0.0
-7 error argv "node" "/usr/local/bin/npm" "start"
-8 error node v0.12.4
-9 error npm  v2.10.1
-10 error path /Users/Isaiah/Desktop/Coding/legacy/src/legacyimpactcompass/package.json
-11 error code ENOENT
-12 error errno -2
-13 error enoent ENOENT, open '/Users/Isaiah/Desktop/Coding/legacy/src/legacyimpactcompass/package.json'
-13 error enoent This is most likely not a problem with npm itself
-13 error enoent and is related to npm not being able to find a file.
-14 verbose exit [ -2, true ]
+4 verbose config Skipping project config: /Users/Isaiah/.npmrc. (matches userconfig)
+5 verbose stack Error: ENOENT, open '/Users/Isaiah/package.json'
+5 verbose stack     at Error (native)
+6 verbose cwd /Users/Isaiah/Desktop/Coding/legacy/src/legacyimpactcompass
+7 error Darwin 15.0.0
+8 error argv "node" "/usr/local/bin/npm" "start"
+9 error node v0.12.4
+10 error npm  v2.10.1
+11 error path /Users/Isaiah/package.json
+12 error code ENOENT
+13 error errno -2
+14 error enoent ENOENT, open '/Users/Isaiah/package.json'
+14 error enoent This is most likely not a problem with npm itself
+14 error enoent and is related to npm not being able to find a file.
+15 verbose exit [ -2, true ]
