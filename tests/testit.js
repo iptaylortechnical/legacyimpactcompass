@@ -205,7 +205,7 @@ function getNextFromParent(data, location) {
 //}
 
 
-var question = 'answers.0.children.1';
+var question = '';
 var answer = 0;
 
 
