@@ -4,7 +4,7 @@
         <script type='text/javascript' src='/socket.io/socket.io.js'></script>
         <script type='text/javascript'>
                 var socket = io(':3000');
-                socket.on ('Server 2 Client Message',
+                socket.on ('q',
                      function(messageFromServer)       {
                         console.log ('server said: ' + messageFromServer);
                      });
@@ -15,7 +15,7 @@
     <body>
         <h5>Worlds smallest Socket.io example to uppercase strings</h5>
         <p>
-        <a href='#' onClick="javascript:socket.emit('Client 2 Server Message', 'return UPPERCASED in the console');">return UPPERCASED in the console</a>
+        <a href='#' onClick="javascript:socket.emit('a', 'return UPPERCASED in the console');">return UPPERCASED in the console</a>
                 <br />
                 socket.emit('Client 2 Server Message', 'try cut/paste this command in your console!');
         </p>

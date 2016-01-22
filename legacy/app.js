@@ -16,6 +16,7 @@ var app = express();
 
 var testroute = require('./realtime');
 app.use('/realtime', testroute);
+var hier = require('./hier');
 
 // var io = app.get('io');
 //
@@ -23,43 +24,34 @@ app.use('/realtime', testroute);
 // 	console.log('connection received');
 // })
 
-lotsofclients = [];
-id = 0;
 
 app.lel = function(io){
 	io.on('connection', function(socket){
-		socket.yourid = id;
-		id++;
-		lotsofclients.push(socket);
-		console.log('connection received');
-		io.emit('Server 2 Client Message', 'Welcome!' );
+		var question = hier.getFirstQuestion();
+		
+		var answerDetails = [];
+		for(var i = 0; i < question.answers.length; i++){
+			answerDetails[i] = {
+				description: question.answers[i].description,
+				answer: question.answers[i].answer
+			};
+		}
+		
+		socket.emit('q', JSON.stringify({
+			qid: question.qid,
+			title: question.title,
+			description: question.description,
+			answers: answerDetails
+		}));
 
-		    socket.on('Client 2 Server Message', function(message)      {
-		        console.log(message + socket.yourid);
-		        io.emit('Server 2 Client Message', message.toUpperCase() );     //upcase it
-		    });
+		socket.on('a', function(message) {
+			console.log(socket.test);
+		  console.log(message);
+		  socket.emit('q', message.toUpperCase() );     //upcase it
+    });
 	})
 }
 
-var on = function(m){
-	var dataLocation = socket.location;
-	var data = socket.data;
-	
-	var question = getLocation(dataLocation, data);
-	var qid = question.qid;
-	
-	
-}
-
-function getLocation(q, data) {
-	var parts = q.split('.');
-	var newData = data[parts[0]];
-	for(var i = 1; i < parts.length; i++){
-		newData = newData[parts[i]];
-	}
-	
-	return newData;
-}
 
 //expose db instance to all endpoints
 //TODO: THIS IS SUBOPTIMAL. IN THE FUTURE, EXPOSE ONLY TO AUTH.JS ETC
