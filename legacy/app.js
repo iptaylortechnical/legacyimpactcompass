@@ -14,9 +14,9 @@ var db = monk('localhost:27017/local');
 //APP
 var app = express();
 
-var testroute = require('./realtime');
+var testroute = require('./socket/realtime');
 app.use('/realtime', testroute);
-var hier = require('./hier');
+var hier = require('./socket/hier');
 
 // var io = app.get('io');
 //
@@ -28,6 +28,8 @@ var hier = require('./hier');
 app.lel = function(io){
 	io.on('connection', function(socket){
 		var question = hier.getFirstQuestion();
+		
+		socket.location = '';
 		
 		var answerDetails = [];
 		for(var i = 0; i < question.answers.length; i++){
@@ -45,7 +47,6 @@ app.lel = function(io){
 		}));
 
 		socket.on('a', function(message) {
-			console.log(socket.test);
 		  console.log(message);
 		  socket.emit('q', message.toUpperCase() );     //upcase it
     });
