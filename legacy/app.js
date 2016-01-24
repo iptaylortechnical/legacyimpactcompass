@@ -64,12 +64,22 @@ app.lel = function(io){
 						authUtil.storeAnswer(!!socket.authorized, socket.id, oldQid, answer, function(e){
 							console.log("store error: " + e);
 						})
-
+						
 						var question = hier.getNextQuestion(socket.location, answer);
 						socket.location = question.location;
-
+						
 						generateQuestion(question.content, socket);
 			    });
+					
+					//TODO: this is the worst.
+					//literally.
+					//currently gets parent question, not last question. im going to bed.
+					socket.on('b', function(){
+						var question = hier.getPrevious(socket.location);
+						socket.location = question.location;
+						
+						generateQuestion(question.content, socket);
+					})
 				})
 			}else{
 				console.log('unathorized. terminating socket.');

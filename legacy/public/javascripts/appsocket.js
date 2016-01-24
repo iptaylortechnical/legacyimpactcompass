@@ -9,7 +9,7 @@ socket.on('q', function(message){
 	createCurrentQuestion();
 });
 
-socket.on('disconnect', function(){alert('been kicked lol');});
+socket.on('disconnect', function(){console.log('been kicked lol');});
 
 function createCurrentQuestion(){
 	document.getElementById('qtitle').innerHTML = active.title;
@@ -39,6 +39,11 @@ function sendAnswer(){
 	console.log('sent');
 }
 
+function goBack(){
+	socket.emit('b');
+	console.log('sent');
+}
+
 function clearCSS(){
 	var answerObjects = $('.choice');
 	
@@ -52,5 +57,9 @@ function clearCSS(){
 $(document).ready(function(){
 	$('#next').click(function(){
 		sendAnswer();
+	})
+	
+	$('#back').click(function(){
+		goBack();
 	})
 })

@@ -215,6 +215,14 @@ exports.getNextQuestion = function(questionLocation, answerID) {
 	return nextQuestion;
 }
 
+exports.getPrevious = function(qLocation){
+	var theParent = getParentQuestion(data, qLocation);
+	return{
+		location: theParent.location,
+		content: theParent.content
+	}
+}
+
 exports.getFirstQuestion = function(){
 	return getLocation(data, '');
 }
