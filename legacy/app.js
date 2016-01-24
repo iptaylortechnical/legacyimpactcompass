@@ -28,29 +28,34 @@ var hier = require('./socket/hier');
 app.lel = function(io){
 	io.on('connection', function(socket){
 		var question = hier.getFirstQuestion();
-		
 		socket.location = '';
-		
-		var answerDetails = [];
-		for(var i = 0; i < question.answers.length; i++){
-			answerDetails[i] = {
-				description: question.answers[i].description,
-				answer: question.answers[i].answer
-			};
-		}
-		
-		socket.emit('q', JSON.stringify({
-			qid: question.qid,
-			title: question.title,
-			description: question.description,
-			answers: answerDetails
-		}));
+		generateQuestion(question, socket);
 
 		socket.on('a', function(message) {
-		  console.log(message);
-		  socket.emit('q', message.toUpperCase() );     //upcase it
+			var answer = JSON.parse(message).answer;
+			var question = hier.getNextQuestion(socket.location, answer);
+			socket.location = question.location;
+			
+			generateQuestion(question.content, socket);
     });
 	})
+}
+
+function generateQuestion(content, socket){
+	var answerDetails = [];
+	for(var i = 0; i < content.answers.length; i++){
+		answerDetails[i] = {
+			description: content.answers[i].description,
+			answer: content.answers[i].answer
+		};
+	}
+
+	socket.emit('q', JSON.stringify({
+		qid: content.qid,
+		title: content.title,
+		description: content.description,
+		answers: answerDetails
+	}));
 }
 
 

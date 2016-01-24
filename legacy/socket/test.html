@@ -1,12 +1,13 @@
 <!doctype html>
-<html>
+<html ng-app="theapp">
 	<head>
 		<script type='text/javascript' src='/socket.io/socket.io.js'></script>
 		<script type='text/javascript' src='/javascripts/mySocket.js'></script>
 		<link rel="stylesheet" href="/stylesheets/question.css">
 		<script src="/javascripts/jquery.min.js"></script>
-		<script href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet" type="text/css"></script>
+		<link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet" type="text/css"/>
 		<script src="/javascripts/question.js"></script>
+		<script src="/javascripts/appsocket.js"></script>
 	</head>
 	<body>
 		<div class="m">
@@ -17,19 +18,20 @@
 					<br>
 					<br>
 					<br>
-					<div class="lol">
-						<div class="title">
-							How many children do you have?
+					<div id="controller" class="lol">
+						<div id="qtitle" class="title">
+							Sample Question?
 						</div>
-						<div class="lel">
-							<div id="1" class="title choice">
-								one
-							</div>
-							<div id="2" class="title choice">
-								two
-							</div>
-							<div id="3" class="title choice">
-								three
+						<div id="lel" class="lel">
+							<div class="content">
+								<div class='answers' id="answers">
+									<div class="title choice">
+										1
+									</div>
+								</div>
+								<div id="description" class="description">
+									Le sample description
+								</div>
 							</div>
 						</div>
 					</div>
@@ -40,10 +42,10 @@
 			</div>
 			<div class="btnmaster">
 				<div class="btncont">
-					<div onclick="goPrev(&quot;1&quot;)" class="btn back">
+					<div class="btn back">
 						back
 					</div>
-					<div class="btn next" style="background-color: rgb(187, 187, 187);">
+					<div id="next" class="btn next">
 						next
 					</div>
 				</div>
