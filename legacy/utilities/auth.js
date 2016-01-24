@@ -9,6 +9,32 @@ exports.setDB = function(indb){
 	return exports;
 }
 
+exports.storeAnswer = function(authorized, id, qid, answer, callback){
+	if(authorized){
+		var users = db.get('users');
+		
+		var toSet = {};
+		
+		toSet['answers.'+qid] = answer;
+		
+		users.update(id, {$set:toSet});
+	}else{
+		callback('client not authorized');
+	}
+}
+
+exports.userID = function(session, callback){
+	if(db){
+		var users = db.get('users');
+		
+		users.find({"sessionid": session}, function(e, docs){
+			callback(e, docs[0]._id);
+		})
+	}else{
+		callback('please register db');
+	}
+}
+
 exports.isUser = function(session, callback){
 	
 	if(db){
@@ -16,13 +42,12 @@ exports.isUser = function(session, callback){
 	
 		users.find({"sessionid": session}, function(e, docs) {
 			var isGood;
-						
+			
 			if(!!docs[0]){
 				isGood = true;
 			}else{
 				isGood = false;
 			}
-		
 			callback(null, isGood);
 		})
 	}else{

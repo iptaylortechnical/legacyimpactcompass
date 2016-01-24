@@ -10,6 +10,7 @@ var http = require('http');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/local');
+var authUtil = require('./utilities/auth').setDB(db);
 
 //APP
 var app = express();
@@ -27,19 +28,41 @@ var hier = require('./socket/hier');
 
 app.lel = function(io){
 	io.on('connection', function(socket){
-		var question = hier.getFirstQuestion();
-		socket.location = '';
-		generateQuestion(question, socket);
 		
-		console.log(socket.request.headers.cookie.split(' ')[1].split('=')[1]);
-
-		socket.on('a', function(message) {
-			var answer = JSON.parse(message).answer;
-			var question = hier.getNextQuestion(socket.location, answer);
-			socket.location = question.location;
+		//TODO: suboptimal for multiple cookies
+		var sessionID = socket.request.headers.cookie.split(' ')[1].split('=')[1];
+		
+		authUtil.isUser(sessionID, function(err, good){
+			socket.authorized = true;
+			if(good){
+				authUtil.userID(sessionID, function(e, id){
+					console.log(e?e:'');
+					console.log('Client with id ' + id + ' has been authorized');
+					
+					socket.id = id;
+					
+					var question = hier.getFirstQuestion();
+					socket.location = '';
+					generateQuestion(question, socket);
+					
+					socket.on('a', function(message) {
+						var answer = JSON.parse(message).answer;
+						var oldQid = hier.getQid(socket.location);
+						
+						authUtil.storeAnswer(!!socket.authorized, socket.id, oldQid, answer, function(e){
+							console.log("store error: " + e);
+						})
+						
+						var question = hier.getNextQuestion(socket.location, answer);
+						socket.location = question.location;
 			
-			generateQuestion(question.content, socket);
-    });
+						generateQuestion(question.content, socket);
+			    });
+				})
+			}else{
+				console.log('unathorized. terminating socket.');
+			}
+		})
 	})
 }
 

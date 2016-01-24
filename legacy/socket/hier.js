@@ -198,18 +198,15 @@ exports.getNextQuestion = function(questionLocation, answerID) {
 	
 	var nextQuestion = {};
 	if(hasChildren(data, questionLocation, answerID)){
-		console.log("has kids");
 		var q = getFirstChild(data, questionLocation, answerID);
 		
 		nextQuestion.location = q.location;
 		nextQuestion.content = q.content;
 	}else if(moreInQuestionGroup(data, questionLocation)){
-		console.log('has siblings');
 		var nextSibling = getNextSibling(data, questionLocation);
 		nextQuestion.location = nextSibling.location;
 		nextQuestion.content = nextSibling.content;
 	}else{
-		console.log('neither');
 		var nextFromP = getNextFromParent(data, questionLocation);
 		nextQuestion.content = nextFromP.content;
 		nextQuestion.location = nextFromP.location;
@@ -220,4 +217,8 @@ exports.getNextQuestion = function(questionLocation, answerID) {
 
 exports.getFirstQuestion = function(){
 	return getLocation(data, '');
+}
+
+exports.getQid = function(location){
+	return getLocation(data, location).qid;
 }
