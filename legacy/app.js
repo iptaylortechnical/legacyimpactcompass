@@ -30,6 +30,8 @@ app.lel = function(io){
 		var question = hier.getFirstQuestion();
 		socket.location = '';
 		generateQuestion(question, socket);
+		
+		console.log(socket.request.headers.cookie.split(' ')[1].split('=')[1]);
 
 		socket.on('a', function(message) {
 			var answer = JSON.parse(message).answer;
