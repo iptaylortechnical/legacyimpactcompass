@@ -6,14 +6,26 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
 
+//APP
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
 //DB
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/local');
 var authUtil = require('./utilities/auth').setDB(db);
-
-//APP
-var app = express();
 
 var testroute = require('./socket/realtime');
 app.use('/realtime', testroute);
@@ -31,36 +43,37 @@ app.lel = function(io){
 		
 		//TODO: suboptimal for multiple cookies
 		var sessionID = socket.request.headers.cookie.split(' ')[1].split('=')[1];
-		
+
 		authUtil.isUser(sessionID, function(err, good){
 			socket.authorized = true;
 			if(good){
 				authUtil.userID(sessionID, function(e, id){
 					console.log(e?e:'');
-					console.log('Client with id ' + id + ' has been authorized');
-					
+					console.log('Client with id ' + id + ' has been authorized to use the socket');
+
 					socket.id = id;
-					
+
 					var question = hier.getFirstQuestion();
 					socket.location = '';
 					generateQuestion(question, socket);
-					
+
 					socket.on('a', function(message) {
 						var answer = JSON.parse(message).answer;
 						var oldQid = hier.getQid(socket.location);
-						
+
 						authUtil.storeAnswer(!!socket.authorized, socket.id, oldQid, answer, function(e){
 							console.log("store error: " + e);
 						})
-						
+
 						var question = hier.getNextQuestion(socket.location, answer);
 						socket.location = question.location;
-			
+
 						generateQuestion(question.content, socket);
 			    });
 				})
 			}else{
 				console.log('unathorized. terminating socket.');
+				socket.disconnect();
 			}
 		})
 	})
@@ -126,18 +139,6 @@ var logout = require('./routes/logout');
 var le_test = require('./sqltests/database');
 var cooktest = require('./tests/cookietest');
 var test = require('./tests/test');
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/registeradvisor', advReg);

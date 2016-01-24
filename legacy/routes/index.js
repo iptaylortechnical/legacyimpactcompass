@@ -15,7 +15,6 @@ router.get('/', function(req, res, next) {
 		auth.isUser(session, function(err, good){
 			if(err)console.log("isUser error: " + err);
 			if(good){
-				console.log('yep');
 				res.writeHead(302, {
 				  'Location': 'home'
 				  //add other headers here...
@@ -23,7 +22,6 @@ router.get('/', function(req, res, next) {
 				res.end();
 			}else{
 				auth.isAdvisor(session, function(err, good){
-					console.log('got here');
 					if(err)console.log("isAdv error: " + err);
 					if(good){
 						res.writeHead(302, {

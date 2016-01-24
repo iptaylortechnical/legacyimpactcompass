@@ -1,0 +1,39 @@
+doctype html
+html(ng-app='theapp')
+  head
+    script(type='text/javascript', src='/socket.io/socket.io.js')
+    script(type='text/javascript', src='/javascripts/mySocket.js')
+    link(rel='stylesheet', href='/stylesheets/question.css')
+    script(src='/javascripts/jquery.min.js')
+    link(href='https://fonts.googleapis.com/css?family=Josefin+Slab', rel='stylesheet', type='text/css')
+    script(src='/javascripts/question.js')
+    script(src='/javascripts/appsocket.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js')
+  body
+    .m
+      .controllers
+        .contentcont
+          br
+          br
+          br
+          br
+          br
+          #controller.lol
+            #qtitle.title
+              | Sample Question?
+            #lel.lel
+              .content
+                #answers.answers
+                  .title.choice
+                    | 1
+                #description.description
+                  | Le sample description
+          br
+          br
+          br
+      .btnmaster
+        .btncont
+          .btn.back
+            | back
+          #next.btn.next
+            | next

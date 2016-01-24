@@ -3,11 +3,13 @@ var active = {};
 
 var currentSelection;
 
-socket.on ('q', function(message){
+socket.on('q', function(message){
 	active = JSON.parse(message);
 	
 	createCurrentQuestion();
 });
+
+socket.on('disconnect', function(){alert('been kicked lol');});
 
 function createCurrentQuestion(){
 	document.getElementById('qtitle').innerHTML = active.title;
@@ -48,7 +50,6 @@ function clearCSS(){
 }
 
 $(document).ready(function(){
-	console.log(!!$('#next').attr('class'));
 	$('#next').click(function(){
 		sendAnswer();
 	})
