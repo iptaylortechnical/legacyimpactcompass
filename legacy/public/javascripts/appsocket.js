@@ -15,20 +15,20 @@ function createCurrentQuestion(){
 	document.getElementById('qtitle').innerHTML = active.title;
 	
 	var theHTML = '';
+		// var theHTML = '';
 	var answers = active.answers;
-	
+
 	for(var i = 0; i < answers.length; i++){
-		theHTML += "<div id='" + i + "' class='title choice'>";
-		theHTML += answers[i].answer;
-		theHTML += "</div>";
+		theHTML += '<a id="' + i + '" class="tile tile-lg tile-sqr tile-grey ripple-effect animated"  0.41s;"><span class="content-wrapper"><span class="tile-content"><span class="tile-img"  url(http://www.google.com/design/images/design-minutes.png);"></span><span class="tile-holder tile-holder-sm"><span class="title">' + answers[i].description + '</span></span></span></span><span class="ink animate"  270px; width: 270px; top: 104px; left: -44px;"></span></a>';
 	}
+	
 	document.getElementById('answers').innerHTML = theHTML;
 	
-	jQuery('.choice').click(function(){
+	jQuery('.tile').click(function(){
 		$('#description').html(active.answers[this.id].description);
-		$(this).attr('class', $(this).attr('class') + ' selected');
+		$(this).addClass('selected');
 		currentSelection = this.id;
-		clearCSS();
+			$('.tile').not(this).removeClass('selected');
 	})
 	
 	$('#0').click();
@@ -44,15 +44,15 @@ function goBack(){
 	console.log('sent');
 }
 
-function clearCSS(){
-	var answerObjects = $('.choice');
-	
-	for(var i = 0; i < answerObjects.length; i++){
-		if(!(i == currentSelection)){
-			$(answerObjects[i]).attr('class', 'title choice');
-		}
-	}
-}
+// function clearCSS(){
+// 	var answerObjects = $('.choice');
+//
+// 	for(var i = 0; i < answerObjects.length; i++){
+// 		if(!(i == currentSelection)){
+// 			$(answerObjects[i]).attr('class', 'title choice');
+// 		}
+// 	}
+// }
 
 $(document).ready(function(){
 	$('#next').click(function(){

@@ -7,8 +7,10 @@ html(ng-app='theapp')
     script(src='/javascripts/jquery.min.js')
     link(href='https://fonts.googleapis.com/css?family=Josefin+Slab', rel='stylesheet', type='text/css')
     script(src='/javascripts/question.js')
-    script(src='/javascripts/appsocket.js')
+    link(rel="stylesheet" href="/css/normalize.css")
+    link(rel="stylesheet" href="/css/style.css")
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js')
+    script(src='/javascripts/appsocket.js')
   body
     .m
       .controllers
@@ -23,11 +25,7 @@ html(ng-app='theapp')
               | Sample Question?
             #lel.lel
               .content
-                #answers.answers
-                  .title.choice
-                    | 1
-                #description.description
-                  | Le sample description
+                .dashboard.display-animation(id='answers' 0='', auto;='', width:='')
           br
           br
           br
