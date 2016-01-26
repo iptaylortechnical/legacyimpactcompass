@@ -71,6 +71,27 @@ var data = {
 					]
 				}
 			]
+		},
+		{
+			"description": "6 children",
+			"answer": "6 things lol",
+			"offspring": {
+				"hasChildren": false
+			}
+		},
+		{
+			"description": "7 children",
+			"answer": "7 and this",
+			"offspring": {
+				"hasChildren": false
+			}
+		},
+		{
+			"description": "8 children",
+			"answer": 8,
+			"offspring": {
+				"hasChildren": false
+			}
 		}
 	]
 };
