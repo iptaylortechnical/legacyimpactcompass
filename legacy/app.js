@@ -37,11 +37,11 @@ var hier = require('./socket/hier');
 // 	console.log('connection received');
 // })
 
-
 app.lel = function(io){
 	io.on('connection', function(socket){
 		
 		//TODO: suboptimal for multiple cookies
+		console.log('h'+socket.request.headers);
 		var sessionID = socket.request.headers.cookie.split(' ')[1].split('=')[1];
 
 		authUtil.isUser(sessionID, function(err, good){
