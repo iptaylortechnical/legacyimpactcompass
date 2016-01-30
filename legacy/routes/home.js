@@ -14,7 +14,16 @@ router.get('/', function(req, res){
 	auth.isUser(session, function(err, good){
 		if(err)console.log("isUser error: " + err);
 		if(good){
-			res.render('home');
+			
+			auth.getCompletion(session, function(err, state){
+				res.render('home', {
+					profile: state.profile,
+					options: state.options,
+					survey: state.survey,
+					fears: state.fears
+				});
+			})
+			
 		}else{
 			auth.isAdvisor(session, function(err, good){
 				if(err)console.log("isAdvisor error: " + err);

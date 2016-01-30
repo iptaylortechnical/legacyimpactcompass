@@ -29,7 +29,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	jQuery('#password').blur(function(){
+	jQuery('#password').on('input', function(){
 		if(jQuery('#password').val()){
 			setReady('password', true);
 			jQuery('#password').css('border', '2px solid #2ECC40');

@@ -4,6 +4,7 @@ html
     link(rel='stylesheet', href='/stylesheets/home.css')
     link(href='https://fonts.googleapis.com/css?family=Josefin+Slab', rel='stylesheet', type='text/css')
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+    script(src="/javascripts/home.js")
   body
     .header
       .title Legacy Impact Compass
@@ -11,10 +12,19 @@ html
       .content
         p
           | Welcome to Legacy Impact Compass. This application will help to lorem ipsum lots of words. This is an application written in NodeJS for the server, python with MatLib for the math, and Jade + Angular for the front end. Would you like to take the survey now?
-        .btncont
-          a(href="/realtime")
-            button.taketest
+        .steps
+          .buttoncontainer
+            button.taketest(class='#{profile}')
+              | profile
+          .buttoncontainer
+            button.taketest(class='#{options}')
+              | options
+          .buttoncontainer
+            button.taketest(class='#{survey}')
               | take survey
+          .buttoncontainer
+            button.taketest(class='#{fears}')
+              | fears
     .footer
       .copyright
         | © 2015 ISAIAH TAYLOR

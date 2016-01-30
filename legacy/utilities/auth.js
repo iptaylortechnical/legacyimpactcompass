@@ -9,6 +9,13 @@ exports.setDB = function(indb){
 	return exports;
 }
 
+var findUser = function(sessionID, callback){
+	var users = db.get('users');
+	users.find({'sessionid': session}, function(e, docs){
+		callback(e, docs);
+	});
+}
+
 exports.storeAnswer = function(authorized, id, qid, answer, callback){
 	if(authorized){
 		var users = db.get('users');
@@ -116,7 +123,13 @@ exports.newUser = function(username, password, ticket, done){
 				username: username, 
 				password: password,
 				sessionid: k,
-				advisorid:ticket
+				advisorid:ticket,
+				state: {
+					profile: 'next',
+					options: 'undone',
+					survey: 'undone',
+					fears: 'undone'
+				}
 			});
 			
 			done(null);
@@ -191,3 +204,15 @@ exports.newAdvisor = function(username, password, ticket, imgurl, samplename, sa
 	
 }
 
+exports.getCompletion = function(sessionID, done){
+	findUser(sessionID, function(e, docs){
+		console.log(docs[0]);
+		var state = docs[0].state;
+		done(e, {
+			profile: state.profile,
+			options: state.options,
+			survey: state.survey,
+			fears: state.fears
+		})
+	})
+}
