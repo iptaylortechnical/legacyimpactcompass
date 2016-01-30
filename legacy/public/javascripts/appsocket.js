@@ -11,6 +11,10 @@ socket.on('q', function(message){
 
 socket.on('disconnect', function(){console.log('been kicked lol');});
 
+socket.on('completed', function(){
+	window.location = '/';
+})
+
 function createCurrentQuestion(){
 	document.getElementById('qtitle').innerHTML = active.title;
 	

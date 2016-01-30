@@ -11,11 +11,19 @@ exports.setDB = function(indb){
 
 var findUser = function(sessionID, callback){
 	var users = db.get('users');
-	users.find({'sessionid': session}, function(e, docs){
+	users.find({'sessionid': sessionID}, function(e, docs){
 		callback(e, docs);
 	});
 }
 
+var updateUser = function(sessionID, obj){
+	var users = db.get('users');
+	var toSet = obj;
+	
+	users.update({"sessionid": sessionID}, {$set:toSet});
+}
+
+//TODO: use native funs
 exports.storeAnswer = function(authorized, id, qid, answer, callback){
 	if(authorized){
 		var users = db.get('users');
@@ -179,7 +187,7 @@ exports.newAdvisor = function(username, password, ticket, imgurl, samplename, sa
 		done(null);
 		
 	}else{
-		done("please regiseter db");
+		done("please register db");
 	}
 	
 	//TODO: PHASE OUT
@@ -204,15 +212,49 @@ exports.newAdvisor = function(username, password, ticket, imgurl, samplename, sa
 	
 }
 
+
+//TODO: suboptimal. dont get whole doc, just get what you need
 exports.getCompletion = function(sessionID, done){
-	findUser(sessionID, function(e, docs){
-		console.log(docs[0]);
-		var state = docs[0].state;
-		done(e, {
-			profile: state.profile,
-			options: state.options,
-			survey: state.survey,
-			fears: state.fears
+	if(db){
+		findUser(sessionID, function(e, docs){
+			var state = docs[0].state;
+			done(e, {
+				profile: state.profile,
+				options: state.options,
+				survey: state.survey,
+				fears: state.fears
+			})
 		})
-	})
+	}else{
+		done("please register db");
+	}
+}
+
+//TODO: suboptimal. dont get whole doc, just get what you need
+//actually this whole thing is hella suboptimal
+exports.surveyComplete = function(session, qid, done){
+	if(db){
+		findUser(session, function(e, docs){
+			var q = Object.keys(docs[0].answers)[0];
+			console.log(q);
+			if(q == qid){
+				console.log('end of the thing');
+				var obj = {
+					state: {
+						profile: 'completed',
+						options: 'next',
+						survey: 'undone',
+						fears: 'undone'
+					}
+				};
+				updateUser(session, obj);
+				done(e, true);
+			}else{
+				done(e, false);
+			}
+			
+		})
+	}else{
+		done('please register db');
+	}
 }

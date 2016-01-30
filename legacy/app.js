@@ -46,6 +46,7 @@ app.lel = function(io){
 
 		authUtil.isUser(sessionID, function(err, good){
 			socket.authorized = true;
+			socket.session = sessionID;
 			if(good){
 				authUtil.userID(sessionID, function(e, id){
 					console.log(e?e:'');
@@ -60,7 +61,7 @@ app.lel = function(io){
 					socket.on('a', function(message) {
 						var answer = JSON.parse(message).answer;
 						var oldQid = hier.getQid(socket.location);
-
+						
 						authUtil.storeAnswer(!!socket.authorized, socket.id, oldQid, answer, function(e){
 							console.log("store error: " + e);
 						})
@@ -97,13 +98,20 @@ function generateQuestion(content, socket){
 			answer: content.answers[i].answer
 		};
 	}
-
-	socket.emit('q', JSON.stringify({
-		qid: content.qid,
-		title: content.title,
-		description: content.description,
-		answers: answerDetails
-	}));
+	//check if the survey is done
+	authUtil.surveyComplete(socket.session, content.qid, function(e, complete){
+		if(!complete){
+			socket.emit('q', JSON.stringify({
+				qid: content.qid,
+				title: content.title,
+				description: content.description,
+				answers: answerDetails
+			}));
+		}else{
+			socket.emit('completed');
+			socket.disconnect();
+		}
+	})
 }
 
 
