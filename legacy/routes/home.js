@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var userinfo = require('../utilities/userinfo');
 var auth;
 
 router.post('/', function(req, res){
@@ -16,12 +17,20 @@ router.get('/', function(req, res){
 		if(good){
 			
 			auth.getCompletion(session, function(err, state){
-				res.render('home', {
-					profile: state.profile,
-					options: state.options,
-					survey: state.survey,
-					fears: state.fears
-				});
+				userinfo.user(session, req.db, function(u){
+					console.log(u);
+					res.render('home', {
+						profile: state.profile,
+						options: state.options,
+						survey: state.survey,
+						fears: state.fears,
+						user: u
+					});
+				})
+				//userinfo.user(session, req.db, function(username){
+					
+					//res.end();
+				//})
 			})
 			
 		}else{

@@ -1,7 +1,6 @@
 // var sqlizer = require('./sqlizer');
 
 exports.user = function(session, db, callback){
-	
 	if(db){
 		var users = db.get('users');
 		
@@ -12,6 +11,8 @@ exports.user = function(session, db, callback){
 				callback(false);
 			}
 		})
+	}else{
+		callback(false);
 	}
 	
 	

@@ -1,4 +1,4 @@
-var socket = io(':3000');
+var socket = io(':80');
 var active = {};
 
 var currentSelection;

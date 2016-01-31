@@ -29,7 +29,6 @@ body{
 	width:85%;
 	margin:0 auto;
 	height:100%;
-	overflow-y:scroll;
 }
 
 .title{
@@ -147,6 +146,7 @@ img{
 
 .taketest{
 	text-decoration:none;
+	font-family: 'Josefin Slab', serif;
 	border:none;
 	background-color:#D9853B;
 	color:white;
@@ -206,6 +206,7 @@ a{
 
 .next{
 	background-color:white;
+	
 	border:1px solid #0074D9;
 	color:#0074D9;
 	transition:background-color 0.3s ease,
@@ -223,6 +224,7 @@ a{
 }
 
 .undone{
+	cursor:default;
 	background-color:white;
 	border:1px solid #AAAAAA;
 	color:#AAAAAA;
@@ -239,3 +241,8 @@ a{
 	color 0.3s ease,
 	opacity 0.3s ease;
 }*/
+
+.nomen{
+	float:right;
+	cursor:pointer;
+}

@@ -137,7 +137,8 @@ exports.newUser = function(username, password, ticket, done){
 					options: 'undone',
 					survey: 'undone',
 					fears: 'undone'
-				}
+				},
+				answers: {}
 			});
 			
 			done(null);
