@@ -259,3 +259,191 @@ exports.surveyComplete = function(session, qid, done){
 		done('please register db');
 	}
 }
+
+exports.setNumberOfChildren = function(session){
+	if(db){
+		findUser(session, function(e, user){
+			if(!e){
+				var answer = user[0].answers['how-many-children'].answer;
+				updateUser(session, {
+					numOfChildren: answer
+				})
+			}else{
+				console.log('ERROR IN AUTH - setNumberOfChildren: ' + e);
+			}
+		})
+	}else{
+		console.log('ERROR IN AUTH - setNumberOfChildren: YOU HAVE NOT REGISTERED DB');
+	}
+}
+
+exports.getNumberOfChildren = function(session, done){
+	if(db){
+		findUser(session, function(e, user){
+			if(!e){
+				done(null, user[0].numOfChildren);
+			}else{
+				done(e);
+			}
+		})
+	}else{
+		done('please register db');
+	}
+}
+
+exports.getQuestionSets = function(done){
+	if(db){
+		var presets = db.get('presets');
+		
+		presets.find({purpose: "questionsets"}, function(e, docs){
+			if(!e){
+				done(null, docs[0].content)
+			}else{
+				done(e);
+			}
+		})
+	}else{
+		done('getQuestionSets: REGISTER DB');
+	}
+}
+
+exports.storeSurvey = function(session, survey){
+	updateUser(session, {survey:survey});
+	updateUser(session, {state:{
+		profile:"completed",
+		options:"completed",
+		survey:"next",
+		fears:"undone"
+	}})
+}
+
+exports.getLastState = function(session, done){
+	if(db){
+		findUser(session, function(e, docs){
+			var state = docs[0].lastState || {};
+			
+			var location = state.location || null;
+			var answer = state.answer || null;
+			
+			done(null, location, answer);
+		})
+	}else{
+		done('please register db');
+	}
+}
+
+exports.setLastState = function(session, location, answer){
+	updateUser(session, {
+		"lastState.location":location,
+		"lastState.answer":answer
+	})
+}
+
+// exports.TEMPORARY_SET_PRESETS = function(){
+// 	if(db){
+// 		var presets = db.get('presets');
+//
+// 		presets.insert({
+// 			purpose: "questionsets",
+// 			content: {
+// 				sample: {
+// 					"qid": "how-many-children",
+// 					"title": "How many children do you have?",
+// 					"description": "Please select the number of children you have.",
+// 					"answers": [
+// 						{
+// 							"description": "5 children",
+// 							"answer": 5,
+// 							"offspring": {
+// 								"hasChildren": true,
+// 								"childCount": 2
+// 							},
+// 							"children": [
+// 								{
+// 									"qid": "kind-of-tacos",
+// 									"title": "What kind of tacos?",
+// 									"description": "What kind of tacos do you prefer?",
+// 									"answers": [
+// 										{
+// 											"description": "meat taco",
+// 											"answer": "meat",
+// 											"offspring": {
+// 												"hasChildren": true,
+// 												"childCount": 1
+// 											},
+// 											"children": [
+// 												{
+// 													"qid": "kind-of-meat",
+// 													"title": "What kind of meat?",
+// 													"description": "What kind of meat do you like on your sub?",
+// 													"answers": [
+// 														{
+// 															"description": "ham meat",
+// 															"answer": "ham",
+// 															"offspring": {
+// 																"hasChildren": false
+// 															}
+// 														}
+// 													]
+// 												}
+// 											]
+// 										},
+// 										{
+// 											"description": "veggie taco",
+// 											"answer": "veggie",
+// 											"offspring": {
+// 												"hasChildren": false
+// 											}
+// 										}
+// 									]
+// 								},
+// 								{
+// 									"qid": "kind-of-subs",
+// 									"title": "What kind of subs?",
+// 									"description": "What kind of subway sandwhiches do they like?",
+// 									"answers": [
+// 										{
+// 											"description": "meatball sub sandwhich",
+// 											"answer": "meatball",
+// 											"offspring": {
+// 												"hasChildren": false
+// 											}
+// 										},
+// 										{
+// 											"description": "chicken bacon ranch melt sub sandwhich",
+// 											"answer": "cbrm",
+// 											"offspring": {
+// 												"hasChildren": false
+// 											}
+// 										}
+// 									]
+// 								}
+// 							]
+// 						},
+// 						{
+// 							"description": "6 children",
+// 							"answer": 6,
+// 							"offspring": {
+// 								"hasChildren": false
+// 							}
+// 						},
+// 						{
+// 							"description": "7 children",
+// 							"answer": 7,
+// 							"offspring": {
+// 								"hasChildren": false
+// 							}
+// 						},
+// 						{
+// 							"description": "8 children",
+// 							"answer": 8,
+// 							"offspring": {
+// 								"hasChildren": false
+// 							}
+// 						}
+// 					]
+// 				}
+// 			}
+// 		});
+// 	}
+// }

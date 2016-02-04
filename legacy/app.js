@@ -28,7 +28,7 @@ var db = monk('localhost:27017/local');
 var authUtil = require('./utilities/auth').setDB(db);
 
 var testroute = require('./socket/realtime');
-app.use('/realtime', testroute);
+app.use('/profile', testroute);
 var hier = require('./socket/hier');
 
 // var io = app.get('io');
@@ -43,7 +43,7 @@ app.lel = function(io){
 		//TODO: suboptimal for multiple cookies
 		console.log('h'+socket.request.headers);
 		var sessionID = socket.request.headers.cookie.split(' ')[1].split('=')[1];
-
+		
 		authUtil.isUser(sessionID, function(err, good){
 			socket.authorized = true;
 			socket.session = sessionID;
@@ -53,23 +53,45 @@ app.lel = function(io){
 					console.log('Client with id ' + id + ' has been authorized to use the socket');
 
 					socket.id = id;
-
-					var question = hier.getFirstQuestion();
-					socket.location = '';
-					generateQuestion(question, socket);
+					
+					authUtil.getLastState(sessionID, function(e, lastLocation, lastAnswer){
+						if(e)console.log(e);
+						
+						if(lastLocation && lastAnswer){
+							var question = hier.getNextQuestion(lastLocation, lastAnswer);
+							
+							socket.location = question.location;
+							socket.content = question.content;
+							generateQuestion(question.content, socket, function(){});
+						}else{
+							var question = hier.getFirstQuestion();
+							socket.location = '';
+							socket.content = question;
+							generateQuestion(question, socket, function(){});
+						}
+					})
 
 					socket.on('a', function(message) {
-						var answer = JSON.parse(message).answer;
+						var answerIndex = JSON.parse(message).answer;
+						var answer = {
+							answer: socket.content.answers[answerIndex].answer,
+							description: socket.content.answers[answerIndex].description
+						};
 						var oldQid = hier.getQid(socket.location);
 						
-						authUtil.storeAnswer(!!socket.authorized, socket.id, oldQid, answer, function(e){
-							console.log("store error: " + e);
-						})
+						authUtil.setLastState(sessionID, socket.location, answerIndex);
 						
-						var question = hier.getNextQuestion(socket.location, answer);
+						var question = hier.getNextQuestion(socket.location, answerIndex);
 						socket.location = question.location;
+						socket.content = question.content;
 						
-						generateQuestion(question.content, socket);
+						generateQuestion(question.content, socket, function(){
+							console.log('storing answer...');
+							authUtil.storeAnswer(!!socket.authorized, socket.id, oldQid, answer, function(e){
+								console.log("store error: " + e);
+							})
+						});
+						
 			    });
 					
 					//TODO: this is the worst.
@@ -79,7 +101,7 @@ app.lel = function(io){
 						var question = hier.getPrevious(socket.location);
 						socket.location = question.location;
 						
-						generateQuestion(question.content, socket);
+						generateQuestion(question.content, socket, function(){});
 					})
 				})
 			}else{
@@ -90,7 +112,7 @@ app.lel = function(io){
 	})
 }
 
-function generateQuestion(content, socket){
+function generateQuestion(content, socket, done){
 	var answerDetails = [];
 	for(var i = 0; i < content.answers.length; i++){
 		answerDetails[i] = {
@@ -108,9 +130,11 @@ function generateQuestion(content, socket){
 				answers: answerDetails
 			}));
 		}else{
+			authUtil.setNumberOfChildren(socket.session);
 			socket.emit('completed');
 			socket.disconnect();
 		}
+		done();
 	})
 }
 
@@ -142,6 +166,8 @@ var advisor = require('./routes/advisor');
 
 //User
 var usrHome = require('./routes/home');
+var optionsRoute = require('./routes/options');
+var setOptions = require('./routes/setoptions');
 //user registration
 var usrReg = require('./routes/usrReg');
 var usrNew = require('./routes/usrNew');
@@ -175,6 +201,8 @@ app.use('/authadvisor', authAdv);
 app.use('/advisor', advisor);
 app.use('/home', usrHome);
 app.use('/q', queryEnd);
+app.use('/options', optionsRoute);
+app.use('/setoptions', setOptions);
 
 app.use('/sqltest', le_test);
 app.use('/cooktest', cooktest);

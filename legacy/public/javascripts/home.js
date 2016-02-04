@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$('.next').click(function(){
-		window.location = '/realtime';
+		window.location = '/' + this.id;
 	})
 	
 	$('.nomen').click(function(){

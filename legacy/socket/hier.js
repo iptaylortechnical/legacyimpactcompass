@@ -1,3 +1,215 @@
+var answerBuilder = {
+	"how-many-children": function(answer, input){
+		var stuff = [
+			[
+				{
+					"qid": "name-child-0",
+					"title": "What is the name of you first child?",
+					"description": "Please enter the name of you first child.",
+					"answers": [
+						{
+							"options": "input",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				},
+				{
+					"qid": "name-child-1",
+					"title": "What is the name of your second child?",
+					"description": "Please enter the name of your second child.",
+					"answers": [
+						{
+							"options": "input",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				}
+			],
+			[
+				{
+					"qid": "name-child-0",
+					"title": "What is the name of you first child?",
+					"description": "Please enter the name of you first child.",
+					"answers": [
+						{
+							"options": "input",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				},
+				{
+					"qid": "name-child-1",
+					"title": "What is the name of your second child?",
+					"description": "Please enter the name of your second child.",
+					"answers": [
+						{
+							"options": "input",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				},
+				{
+					"qid": "name-child-2",
+					"title": "What is the name of your third child?",
+					"description": "Please enter the name of your third child.",
+					"answers": [
+						{
+							"options": "input",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				}
+			],
+			[
+				{
+					"qid": "name-child-0",
+					"title": "What is the name of you first child?",
+					"description": "Please enter the name of you first child.",
+					"answers": [
+						{
+							"options": "input",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				},
+				{
+					"qid": "name-child-1",
+					"title": "What is the name of your second child?",
+					"description": "Please enter the name of your second child.",
+					"answers": [
+						{
+							"options": "input",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				},
+				{
+					"qid": "name-child-2",
+					"title": "What is the name of your third child?",
+					"description": "Please enter the name of your third child.",
+					"answers": [
+						{
+							"options": "input",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				},
+				{
+					"qid": "name-child-3",
+					"title": "What is the name of your fourth child?",
+					"description": "Please enter the name of your fourth child.",
+					"answers": [
+						{
+							"options": "input",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				}
+			]
+		];
+		
+		if(input){
+			var ret = [];
+			
+			var proto = {
+				"qid": "name-child-",
+				"title": "What is the name of child ",
+				"description": "Please enter the name of child ",
+				"answers": [
+					{
+						"options": "input",
+						"offspring": {
+							"hasChildren": false
+						}
+					}
+				]
+			};
+			
+			for(var i = 0; i < answer; i++){
+				proto.qid = proto.qid + i;
+				proto.title = proto.title + i;
+				proto.description = proto.description + i;
+				
+				ret.push(proto);
+			}
+			
+			return ret;
+		}else{
+			return stuff[answer];
+		}
+	}
+}
+
+
+
+var dataNew = [
+	{
+		"qid": "name",
+		"title": "What is your name?",
+		"description": "First and last is fine.",
+		"answer": [
+			{
+				"options": "input",
+				"offspring": {
+					"hasChildren": false
+				}
+			}
+		]
+	},
+	{
+		"qid": "how-many-children",
+		"title": "How many children do you have?",
+		"Please select the number of children you have, or other.",
+		"answer": [
+			{
+				"description": "2 children",
+				"answer": 2,
+				"offspring": {
+					"hasChildren": true,
+				}
+			},
+			{
+				"description": "3 children",
+				"answer": 3,
+				"offspring": {
+					"hasChildren": true,
+				}
+			},
+			{
+				"description": "4 children",
+				"answer": 4,
+				"offspring": {
+					"hasChildren": true,
+				}
+			},
+			{
+				"options": "input",
+				"offspring":{
+					"hasChildren": true,
+				}
+			}
+		]
+	}
+]
+
 var data = {
 	"qid": "how-many-children",
 	"title": "How many children do you have?",
@@ -74,14 +286,14 @@ var data = {
 		},
 		{
 			"description": "6 children",
-			"answer": "6 things lol",
+			"answer": 6,
 			"offspring": {
 				"hasChildren": false
 			}
 		},
 		{
 			"description": "7 children",
-			"answer": "7 and this",
+			"answer": 7,
 			"offspring": {
 				"hasChildren": false
 			}
