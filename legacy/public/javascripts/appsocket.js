@@ -1,4 +1,7 @@
-var socket = io(':3000');
+var PRODUCTION = true;
+
+
+var socket = io(PRODUCTION ? ':80' : ':3000');
 var active = {};
 
 var currentSelection;
