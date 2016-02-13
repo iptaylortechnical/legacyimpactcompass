@@ -210,14 +210,14 @@
 // 	 }
 // ]
 
-var data = {
+var olddata = {
 	"qid": "how-many-children",
 	"title": "How many children do you have?",
 	"description": "Please select the number of children you have.",
 	"answers": [
 		{
-			"description": "5 children",
-			"answer": 5,
+			"description": "1 child",
+			"answer": 1,
 			"offspring": {
 				"hasChildren": true,
 				"childCount": 2
@@ -285,28 +285,181 @@ var data = {
 			]
 		},
 		{
-			"description": "6 children",
-			"answer": 6,
+			"description": "2 children",
+			"answer": 2,
 			"offspring": {
 				"hasChildren": false
 			}
 		},
 		{
-			"description": "7 children",
-			"answer": 7,
+			"description": "3 children",
+			"answer": 3,
 			"offspring": {
 				"hasChildren": false
 			}
 		},
 		{
-			"description": "8 children",
-			"answer": 8,
+			"description": "4 children",
+			"answer": 4	,
 			"offspring": {
 				"hasChildren": false
 			}
 		}
 	]
 };
+
+
+var data = {
+	"test":"test",
+	"qid": "continue",
+	"title": "Continue",
+	"type": "static",
+	"description": "Would you like to continue with the survey?",
+	"answers": [
+		{
+			"description": "Yes",
+			"answer": true,
+			"type": "static",
+			"offspring": {
+				"hasChildren":true,
+				"childCount": 5
+			},
+			"children": [
+				{
+					"qid": "name",
+					"title": "What is your name?",
+					"type": "flatinput",
+					"description": "First and Last is fine.",
+					"answers": [
+						{
+							"description": "",
+							"type": "input",
+							"answer": "John Smith",
+							"offspring": {
+								"hasChildren":false
+							}
+						}
+					]
+				},
+				{
+					"qid": "birthyear",
+					"title": "What is your birthyear?",
+					"type": "flatinput",
+					"description": "Format: XXXX",
+					"answers": [
+						{
+							"description": "",
+							"type": "input",
+							"answer": "XXXX",
+							"offspring": {
+								"hasChildren":false
+							}
+						}
+					]
+				},
+				{
+					"qid": "state",
+					"title": "Where do you live?",
+					"type": "flatinput",
+					"description": "Please enter your two-character state code.",
+					"answers": [
+						{
+							"description": "",
+							"type": "input",
+							"answer": "CO",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				},
+				{
+					"qid": "married",
+					"title": "Are you single or married?",
+					"type": "static",
+					"description": "Please select that which applies.",
+					"answers": [
+						{
+							"description": "Single",
+							"answer": false,
+							"type": "static",
+							"offspring": {
+								"hasChildren": false
+							}
+						},
+						{
+							"description": "Married",
+							"answer": true,
+							"type": "static",
+							"offspring": {
+								"hasChildren": true,
+								"childCount": 2
+							},
+							"children": [
+								{
+									"qid": "spouse_name",
+									"title": "What is the name of your spouse?",
+									"type": "flatinput",
+									"description": "First and last will do.",
+									"answers": [
+										{
+											"description": "",
+											"answer": "John Smith",
+											"type": "input",
+											"offspring": {
+												"hasChildren": false
+											}
+										}
+									]
+								},
+								{
+									"qid": "spouse_birthyear",
+									"title": "What is the birthyear of your spouse?",
+									"type": "flatinput",
+									"description": "Format: XXXX",
+									"answers": [
+										{
+											"description": "",
+											"answer": "XXXX",
+											"type": "input",
+											"offspring": {
+												"hasChildren": false
+											}
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"qid": "children",
+					"type": "children",
+					"title": "Your Children",
+					"description": "Please fill out the following information for each of your children.",
+					"answers": [
+						{
+							"description": "not seen",
+							"answer": "not seen",
+							"type": "kid",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"description": "No",
+			"answer": false,
+			"type": "static",
+			"offspring": {
+				"hasChildren":false
+			}
+		}
+	]
+}
 
 
 function getLocation(data, q) {

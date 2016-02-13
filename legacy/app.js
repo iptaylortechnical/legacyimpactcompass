@@ -72,11 +72,15 @@ app.lel = function(io){
 					})
 
 					socket.on('a', function(message) {
-						var answerIndex = JSON.parse(message).answer;
-						var answer = {
-							answer: socket.content.answers[answerIndex].answer,
-							description: socket.content.answers[answerIndex].description
-						};
+						
+						var mes = JSON.parse(message);
+						
+						var answerIndex = mes.answerIndex;
+						
+						var ans = mes.answer;
+						console.log(ans);
+						
+						var answer = ans;
 						var oldQid = hier.getQid(socket.location);
 						
 						authUtil.setLastState(sessionID, socket.location, answerIndex);
@@ -126,6 +130,7 @@ function generateQuestion(content, socket, done){
 			socket.emit('q', JSON.stringify({
 				qid: content.qid,
 				title: content.title,
+				type: content.type,
 				description: content.description,
 				answers: answerDetails
 			}));

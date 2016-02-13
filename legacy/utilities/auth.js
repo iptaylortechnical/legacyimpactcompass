@@ -260,35 +260,40 @@ exports.surveyComplete = function(session, qid, done){
 	}
 }
 
+
+// ????? THIS IS HORRIBLE. WHAT WERE I THINKING? STAHP.
 exports.setNumberOfChildren = function(session){
-	if(db){
-		findUser(session, function(e, user){
-			if(!e){
-				var answer = user[0].answers['how-many-children'].answer;
-				updateUser(session, {
-					numOfChildren: answer
-				})
-			}else{
-				console.log('ERROR IN AUTH - setNumberOfChildren: ' + e);
-			}
-		})
-	}else{
-		console.log('ERROR IN AUTH - setNumberOfChildren: YOU HAVE NOT REGISTERED DB');
-	}
+	// if(db){
+// 		findUser(session, function(e, user){
+// 			if(!e){
+// 				var answer = user[0].answers['how-many-children'].answer;
+// 				updateUser(session, {
+// 					numOfChildren: answer
+// 				})
+// 			}else{
+// 				console.log('ERROR IN AUTH - setNumberOfChildren: ' + e);
+// 			}
+// 		})
+// 	}else{
+// 		console.log('ERROR IN AUTH - setNumberOfChildren: YOU HAVE NOT REGISTERED DB');
+// 	}
 }
 
+
+// NOOPPPEEE
 exports.getNumberOfChildren = function(session, done){
-	if(db){
-		findUser(session, function(e, user){
-			if(!e){
-				done(null, user[0].numOfChildren);
-			}else{
-				done(e);
-			}
-		})
-	}else{
-		done('please register db');
-	}
+	done('lame');
+	// if(db){
+// 		findUser(session, function(e, user){
+// 			if(!e){
+// 				done(null, user[0].numOfChildren);
+// 			}else{
+// 				done(e);
+// 			}
+// 		})
+// 	}else{
+// 		done('please register db');
+// 	}
 }
 
 exports.getQuestionSets = function(done){
