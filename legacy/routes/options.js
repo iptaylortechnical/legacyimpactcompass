@@ -17,7 +17,7 @@ router.get('/', function(req, res){
 		if(good){
 			
 			auth.getCompletion(session, function(err, state){
-				
+				console.log(state);
 				if(state.options == 'next'){
 					userinfo.user(session, req.db, function(u){
 						console.log(u);

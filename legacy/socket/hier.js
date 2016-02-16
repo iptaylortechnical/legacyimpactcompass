@@ -447,6 +447,46 @@ var data = {
 							}
 						}
 					]
+				},
+				{
+					"qid": "bless_other",
+					"type": "multi",
+					"title": "Select any others you would like to bless with your inheritance.",
+					"description": "Select all that apply",
+					"answers": [
+						{
+							"description": "Grandchildren",
+							"answer": "Grandchildren",
+							"type": "static",
+							"offspring": {
+								"hasChildren": false
+							}
+						},
+						{
+							"description": "In-Laws",
+							"answer": "In-Laws",
+							"type": "static",
+							"offspring": {
+								"hasChildren": false
+							}
+						},
+						{
+							"description": "Parents",
+							"answer": "Parents",
+							"type": "static",
+							"offspring": {
+								"hasChildren": false
+							}
+						},
+						{
+							"description": "Siblings",
+							"answer": "Siblings",
+							"type": "static",
+							"offspring": {
+								"hasChildren": false
+							}
+						}
+					]
 				}
 			]
 		},

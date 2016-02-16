@@ -7,6 +7,8 @@ var active = {};
 var multi = {};
 var currentSelection;
 
+var maxChildIndex;
+
 socket.on('q', function(message){
 	active = JSON.parse(message);
 	
@@ -74,16 +76,33 @@ function createCurrentQuestion(){
 		document.getElementById('answers').innerHTML = theHTML;
 	
 		jQuery('.tile').click(function(){
-			if(multi[this.id]){
+			if(!multi[this.id]){
 				$(this).addClass('selected');
 				multi[this.id] = active.answers[this.id];
 			}else{
-				$(this.id).removeClass('selected');
+				$(this).removeClass('selected');
 				delete multi[this.id];
 			}
 		})
 	
 		$('#0').click();
+	}
+	
+	if(active.type == 'children'){
+		
+		maxChildIndex = 0;
+		
+		document.getElementById('qtitle').innerHTML = "Please fill out for each of your children:";
+		
+		document.getElementById("content").innerHTML = "<div id='childrenholder' class='childrenholder'><div id='child0' class='achild'><label>Name: </label><input id='name0' class='name' label='Name:'><label>Date: </label><input id='year0' class='name' label='Year:'></div></div><div id='add' class='addchild'>+</div>";
+		
+		$('#add').click(function(){
+			
+			maxChildIndex++;
+			
+			$('#childrenholder').append("<div id='child" + maxChildIndex + "' class='achild'><label>Name: </label><input id='name" + maxChildIndex + "' class='name' label='Name:'><label>Date: </label><input id='year" + maxChildIndex + "' class='name' label='Year:'></div>");
+		
+		})
 	}
 }
 
@@ -107,9 +126,37 @@ function sendAnswer(type){
 	}
 	
 	if(type == 'multi'){
+		
+		var multiSend = [];
+		var multiKeys = Object.keys(multi);
+		
+		for(var i = 0; i < multiKeys.length; i++){
+			multiSend[i] = active.answers[multiKeys[i]].answer;
+		}
+		
+		console.log(multiSend);
+		
 		socket.emit('a', JSON.stringify({
-			"answer": multi,
+			"answer": multiSend,
 			"answerIndex": currentSelection
+		}))
+	}
+	
+	if(type == 'children'){
+		var toSend = [];
+		
+		for(var i = 0; i < maxChildIndex + 1; i++){
+			//TODO: GET YEAR
+			toSend.push({
+				name: $('#name' + i).val(),
+				year: $('#year' + i).val(),
+				isMinor: (2016 - parseInt($('#year' + i).val())) < 18
+			});
+		}
+		
+		socket.emit('a', JSON.stringify({
+			"answer": toSend,
+			"answerIndex": 0
 		}))
 	}
 	

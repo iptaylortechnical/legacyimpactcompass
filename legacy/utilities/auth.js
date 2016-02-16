@@ -281,19 +281,18 @@ exports.setNumberOfChildren = function(session){
 
 
 // NOOPPPEEE
-exports.getNumberOfChildren = function(session, done){
-	done('lame');
-	// if(db){
-// 		findUser(session, function(e, user){
-// 			if(!e){
-// 				done(null, user[0].numOfChildren);
-// 			}else{
-// 				done(e);
-// 			}
-// 		})
-// 	}else{
-// 		done('please register db');
-// 	}
+exports.getChildren = function(session, done){
+	if(db){
+		findUser(session, function(e, user){
+			if(!e){
+				done(null, user[0].answers.children);
+			}else{
+				done(e);
+			}
+		})
+	}else{
+		done('please register db');
+	}
 }
 
 exports.getQuestionSets = function(done){

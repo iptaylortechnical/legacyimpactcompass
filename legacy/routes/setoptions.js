@@ -26,20 +26,14 @@ router.get('/', function(req, res, next){
 					var survey = [];
 					var surveySections = [];
 	
-					auth.getNumberOfChildren(session, function(e, num){
-						for(var i = 0; i < data.length; i++){
-							surveySections.push(qsets[data[i]]('ron'));
-						}
-						
-						var surveySectionsJoined = collect(surveySections);
-				
-						for(var i = 0; i < num; i++){
-							survey.push(surveySectionsJoined);
+					auth.getChildren(session, function(e, kids){
+						for(var k = 0; k < kids.length; k++){
+							for(var i = 0; i < data.length; i++){
+								surveySections.push(qsets[data[i]](kids[k].name));
+							}
 						}
 				
-						console.log(surveySectionsJoined);
-				
-						auth.storeSurvey(session, survey);
+						auth.storeSurvey(session, surveySections);
 					})
 				}
 			})
