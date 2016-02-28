@@ -1,0 +1,151 @@
+body{
+	margin-left:20px;
+	margin-right:20px;
+	font-family: 'Josefin Slab', serif;
+}
+
+.header{
+	display: inline-block;
+	background-color:transparent;
+	width:100%;
+	height:85px;
+	border-bottom:2px solid white;
+}
+
+.main{
+	background-color:transparent;
+	width:100%;
+	border-bottom:2px solid white;
+	padding-bottom:15px;
+	margin-top:15px;
+}
+
+.content{
+	padding-left:5px;
+	background-color:inherit;
+	border-left:2px solid white;
+	border-right:2px solid white;
+	width:85%;
+	margin:0 auto;
+}
+
+.title{
+	font-size:30px;
+	font-family: 'Josefin Slab', serif;
+	padding-top:10px;
+	text-align:center;
+	background:transparent;
+	margin-bottom:40px;
+	margin:0 auto;
+}
+
+p{
+	font-family: 'Josefin Slab', serif;
+	font-size:19;
+}
+
+a{
+	font-family: 'Josefin Slab', serif;
+}
+
+.copyright{
+	padding-top:10px;
+	text-align:center;
+	margin:0 auto;
+	font-size:10;
+}
+
+.welcometext{
+	font-size:20px;
+	margin-bottom: 30px;
+	
+}
+
+.submit{
+	background-color:#D9853B;
+	border:0;
+	color:white;
+	cursor:pointer;
+	font-size:30px;
+	font-weight:100;
+	padding:.2em 1.2em;
+	display:block;
+	margin:0 auto;
+}
+
+img{
+	height:300px;
+	margin:0 auto;
+	display:block;
+}
+
+.ticket {
+    display:block;
+		height:33px;
+		width:204px;
+		margin:0 auto;
+}
+
+.tickin {
+    width:32px;
+    height:32px;
+		float:left;
+		margin:1px;
+		padding-right:0;
+}
+
+.plsenter{
+	text-align:center;
+}
+
+
+a{
+	text-decoration:none;
+}
+
+
+.nomen{
+	float:right;
+	cursor:pointer;
+}
+
+.optioncontainer{
+	margin:0 auto;
+}
+
+.option{
+	width:300px;
+	height:300px;
+	display:inline-block;
+	margin:13px;
+	border:3px solid lightgray;
+	color:lightgrey;
+	border-radius:10px;
+	cursor:pointer;
+}
+
+.optiontitle{
+	margin-top:125px;
+}
+
+.selected{
+	border: 3px solid #2ECC40;
+	color:#2ECC40;
+}
+
+.child{
+	width:100%;
+	border:1px solid grey;
+}
+
+.undone{
+	color:grey;
+}
+
+.next{
+	color:blue;
+}
+
+.completed{
+	color:green;
+}

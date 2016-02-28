@@ -29,7 +29,7 @@ router.get('/', function(req, res, next){
 					auth.getChildren(session, function(e, kids){
 						for(var k = 0; k < kids.length; k++){
 							for(var i = 0; i < data.length; i++){
-								surveySections.push(qsets[data[i]](kids[k].name));
+								surveySections.push(qsets[data[i]](kids[k].name.split(' ')[0]));
 							}
 						}
 				

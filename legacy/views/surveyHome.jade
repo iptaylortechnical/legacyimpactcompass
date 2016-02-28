@@ -1,0 +1,25 @@
+html
+  head
+    title Register
+    link(rel='stylesheet', href='/stylesheets/surveyHome.css')
+    link(href='https://fonts.googleapis.com/css?family=Josefin+Slab', rel='stylesheet', type='text/css')
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+    script(src="/javascripts/surveyHome.js")
+  body
+    .nomen Welcome, #{user} | Log Out
+    .header
+      .title Legacy Impact Compass
+    .main
+      .content
+        .optioncontainer
+          each val, index in things
+            if val == 'undone'
+              .child.undone= index
+            else if val == 'next'
+              .child.next= index
+            else if val == 'completed'
+              .child.completed= index
+        button.submit continue
+    .footer
+      .copyright
+        | © 2015 ISAIAH TAYLOR

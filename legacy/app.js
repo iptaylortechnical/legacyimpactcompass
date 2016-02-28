@@ -29,90 +29,114 @@ var authUtil = require('./utilities/auth').setDB(db);
 
 var testroute = require('./socket/realtime');
 app.use('/profile', testroute);
-var hier = require('./socket/hier');
+// var hier = {
+// 	profile: require('./socket/hier')('profile'),
+// 	survey: require('./socket/hier')('survey')
+// }
 
-// var io = app.get('io');
-//
-// io.on('connection', function(socket){
-// 	console.log('connection received');
-// })
+function getHierarchy(sessionID, intent, done){
+	if(intent == 'profile'){
+		done(require('./socket/hier'));
+	}
+	
+	if(intent == 'survey'){
+		var tempHier = require('./socket/hier');
+		tempHier.setData(authUtil.getSurvey(sessionID));
+		done(tempHier);
+	}
+}
 
 app.lel = function(io){
 	io.on('connection', function(socket){
 		
-		//TODO: suboptimal for multiple cookies
-		console.log('h'+socket.request.headers);
-		var sessionID = socket.request.headers.cookie.split(' ')[1].split('=')[1];
+		socket.emit('authentication_request');
+		console.log("delivered authentication request to client");
 		
-		authUtil.isUser(sessionID, function(err, good){
-			socket.authorized = true;
-			socket.session = sessionID;
-			if(good){
-				authUtil.userID(sessionID, function(e, id){
-					console.log(e?e:'');
-					console.log('Client with id ' + id + ' has been authorized to use the socket');
+		socket.on('authentication_attempt', function(msg){
+			
+			var parsedAuth = msg;
+			console.log("recieved authentication attempt client with intent: " + msg.intent);
+			var sessionID = parsedAuth.sessionID;
+			
+			
+			//EWWWWWW. THIS IS HORRIBLE AND TOTALLY UNSAFE
+			//THE REST SHOULD BE IN THE getHierarchy CALLBACK
+			var hier = require('./socket/hier');
+			
+			getHierarchy(sessionID, msg.intent, function(surv){
+				hier = surv;
+			});
+			
+			authUtil.isUser(sessionID, function(err, good){
+				socket.authorized = true;
+				socket.session = sessionID;
+				if(good){
+					authUtil.userID(sessionID, function(e, id){
+						console.log('Client with id ' + id + ' has been authorized to use the socket');
 
-					socket.id = id;
+						socket.id = id;
 					
-					authUtil.getLastState(sessionID, function(e, lastLocation, lastAnswer){
-						if(e)console.log(e);
+						authUtil.getLastState(sessionID, function(e, lastLocation, lastAnswer){
+							if(e)console.log(e);
 						
-						if(lastLocation && lastAnswer){
-							var question = hier.getNextQuestion(lastLocation, lastAnswer);
+							if(lastLocation && lastAnswer){
+								var question = hier.getNextQuestion(lastLocation, lastAnswer);
 							
+								socket.location = question.location;
+								socket.content = question.content;
+								generateQuestion(question.content, socket, function(){});
+							}else{
+								var question = hier.getFirstQuestion();
+								socket.location = '';
+								socket.content = question;
+								generateQuestion(question, socket, function(){});
+							}
+						})
+
+						socket.on('a', function(message) {
+						
+							var mes = JSON.parse(message);
+						
+							var answerIndex = mes.answerIndex;
+						
+							var ans = mes.answer;
+							console.log(ans);
+						
+							var answer = ans;
+							var oldQid = hier.getQid(socket.location);
+						
+							authUtil.setLastState(sessionID, socket.location, answerIndex);
+						
+							var question = hier.getNextQuestion(socket.location, answerIndex);
 							socket.location = question.location;
 							socket.content = question.content;
-							generateQuestion(question.content, socket, function(){});
-						}else{
-							var question = hier.getFirstQuestion();
-							socket.location = '';
-							socket.content = question;
-							generateQuestion(question, socket, function(){});
-						}
-					})
-
-					socket.on('a', function(message) {
 						
-						var mes = JSON.parse(message);
+							generateQuestion(question.content, socket, function(){
+								console.log('storing answer...');
+								authUtil.storeAnswer(!!socket.authorized, socket.id, oldQid, answer, function(e){
+									console.log("store error: " + e);
+								})
+							});
 						
-						var answerIndex = mes.answerIndex;
-						
-						var ans = mes.answer;
-						console.log(ans);
-						
-						var answer = ans;
-						var oldQid = hier.getQid(socket.location);
-						
-						authUtil.setLastState(sessionID, socket.location, answerIndex);
-						
-						var question = hier.getNextQuestion(socket.location, answerIndex);
-						socket.location = question.location;
-						socket.content = question.content;
-						
-						generateQuestion(question.content, socket, function(){
-							console.log('storing answer...');
-							authUtil.storeAnswer(!!socket.authorized, socket.id, oldQid, answer, function(e){
-								console.log("store error: " + e);
-							})
-						});
-						
-			    });
+				    });
 					
-					//TODO: this is the worst.
-					//literally.
-					//currently gets parent question, not last question. im going to bed.
-					socket.on('b', function(){
-						var question = hier.getPrevious(socket.location);
-						socket.location = question.location;
+						//TODO: this is the worst.
+						//literally.
+						//currently gets parent question, not last question. im going to bed.
+						socket.on('b', function(){
+							var question = hier.getPrevious(socket.location);
+							socket.location = question.location;
 						
-						generateQuestion(question.content, socket, function(){});
+							generateQuestion(question.content, socket, function(){});
+						})
 					})
-				})
-			}else{
-				console.log('unathorized. terminating socket.');
-				socket.disconnect();
-			}
+				}else{
+					console.log('unathorized. terminating socket.');
+					socket.disconnect();
+				}
+			})
 		})
+		//end
 	})
 }
 
@@ -136,6 +160,7 @@ function generateQuestion(content, socket, done){
 			}));
 		}else{
 			authUtil.setNumberOfChildren(socket.session);
+			authUtil.setOnChild(socket.session);
 			socket.emit('completed');
 			socket.disconnect();
 		}
@@ -173,6 +198,7 @@ var advisor = require('./routes/advisor');
 var usrHome = require('./routes/home');
 var optionsRoute = require('./routes/options');
 var setOptions = require('./routes/setoptions');
+var surveyHome = require('./routes/surveyHome');
 //user registration
 var usrReg = require('./routes/usrReg');
 var usrNew = require('./routes/usrNew');
@@ -208,6 +234,7 @@ app.use('/home', usrHome);
 app.use('/q', queryEnd);
 app.use('/options', optionsRoute);
 app.use('/setoptions', setOptions);
+app.use('/take', surveyHome);
 
 app.use('/sqltest', le_test);
 app.use('/cooktest', cooktest);

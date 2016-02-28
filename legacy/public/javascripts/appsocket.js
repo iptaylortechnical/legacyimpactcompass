@@ -9,13 +9,20 @@ var currentSelection;
 
 var maxChildIndex;
 
+socket.on('authentication_request', function(){
+	socket.emit('authentication_attempt', {
+		sessionID: $.cookie('sessionID'),
+		intent: 'profile'
+	})
+})
+
 socket.on('q', function(message){
 	active = JSON.parse(message);
 	
 	createCurrentQuestion();
 });
 
-socket.on('disconnect', function(){console.log('been kicked lol');});
+socket.on('disconnect', function(){console.log('been kicked lol'); window.location = '/take';});
 
 socket.on('completed', function(){
 	window.location = '/';

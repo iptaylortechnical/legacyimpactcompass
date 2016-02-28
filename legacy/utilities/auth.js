@@ -138,7 +138,10 @@ exports.newUser = function(username, password, ticket, done){
 					survey: 'undone',
 					fears: 'undone'
 				},
-				answers: {}
+				answers: {},
+				survey: {},
+				lastState: {},
+				onChild: {}
 			});
 			
 			done(null);
@@ -312,13 +315,18 @@ exports.getQuestionSets = function(done){
 }
 
 exports.storeSurvey = function(session, survey){
-	updateUser(session, {survey:survey});
-	updateUser(session, {state:{
-		profile:"completed",
-		options:"completed",
-		survey:"next",
-		fears:"undone"
-	}})
+	if(db){
+		updateUser(session, {survey:survey});
+		updateUser(session, {state:{
+			profile:"completed",
+			options:"completed",
+			survey:"next",
+			fears:"undone"
+		}})
+	}else{
+		console.log('storeSurvey: REGISTER DB');
+		return 'storeSurvey: REGISTER DB';
+	}
 }
 
 exports.getLastState = function(session, done){
@@ -337,117 +345,57 @@ exports.getLastState = function(session, done){
 }
 
 exports.setLastState = function(session, location, answer){
-	updateUser(session, {
-		"lastState.location":location,
-		"lastState.answer":answer
-	})
+	if(db){
+		updateUser(session, {
+			"lastState.location":location,
+			"lastState.answer":answer
+		})
+	}else{
+		console.log('setLastState: REGISTER DB');
+		return 'setLastState: REGISTER DB';
+	}
 }
 
-// exports.TEMPORARY_SET_PRESETS = function(){
-// 	if(db){
-// 		var presets = db.get('presets');
-//
-// 		presets.insert({
-// 			purpose: "questionsets",
-// 			content: {
-// 				sample: {
-// 					"qid": "how-many-children",
-// 					"title": "How many children do you have?",
-// 					"description": "Please select the number of children you have.",
-// 					"answers": [
-// 						{
-// 							"description": "5 children",
-// 							"answer": 5,
-// 							"offspring": {
-// 								"hasChildren": true,
-// 								"childCount": 2
-// 							},
-// 							"children": [
-// 								{
-// 									"qid": "kind-of-tacos",
-// 									"title": "What kind of tacos?",
-// 									"description": "What kind of tacos do you prefer?",
-// 									"answers": [
-// 										{
-// 											"description": "meat taco",
-// 											"answer": "meat",
-// 											"offspring": {
-// 												"hasChildren": true,
-// 												"childCount": 1
-// 											},
-// 											"children": [
-// 												{
-// 													"qid": "kind-of-meat",
-// 													"title": "What kind of meat?",
-// 													"description": "What kind of meat do you like on your sub?",
-// 													"answers": [
-// 														{
-// 															"description": "ham meat",
-// 															"answer": "ham",
-// 															"offspring": {
-// 																"hasChildren": false
-// 															}
-// 														}
-// 													]
-// 												}
-// 											]
-// 										},
-// 										{
-// 											"description": "veggie taco",
-// 											"answer": "veggie",
-// 											"offspring": {
-// 												"hasChildren": false
-// 											}
-// 										}
-// 									]
-// 								},
-// 								{
-// 									"qid": "kind-of-subs",
-// 									"title": "What kind of subs?",
-// 									"description": "What kind of subway sandwhiches do they like?",
-// 									"answers": [
-// 										{
-// 											"description": "meatball sub sandwhich",
-// 											"answer": "meatball",
-// 											"offspring": {
-// 												"hasChildren": false
-// 											}
-// 										},
-// 										{
-// 											"description": "chicken bacon ranch melt sub sandwhich",
-// 											"answer": "cbrm",
-// 											"offspring": {
-// 												"hasChildren": false
-// 											}
-// 										}
-// 									]
-// 								}
-// 							]
-// 						},
-// 						{
-// 							"description": "6 children",
-// 							"answer": 6,
-// 							"offspring": {
-// 								"hasChildren": false
-// 							}
-// 						},
-// 						{
-// 							"description": "7 children",
-// 							"answer": 7,
-// 							"offspring": {
-// 								"hasChildren": false
-// 							}
-// 						},
-// 						{
-// 							"description": "8 children",
-// 							"answer": 8,
-// 							"offspring": {
-// 								"hasChildren": false
-// 							}
-// 						}
-// 					]
-// 				}
-// 			}
-// 		});
-// 	}
-// }
+exports.getSurvey = function(session, done){
+	if(db){
+		findUser(session, function(e, docs){
+			var survey = docs[0].survey;
+			
+			done(e, survey);
+		})
+	}else{
+		done('getSurvey: REGISTER DB');
+	}
+}
+
+exports.setOnChild = function(session){
+	if(db){
+		findUser(session, function(e, docs){
+			var children = docs[0].answers.children;
+			
+			var onChild = {};
+			
+			for(var i = 0; i < children.length; i++){
+				onChild[children[i].name.split(' ')[0]] = 'undone';
+			}
+			
+			onChild[Object.keys(onChild)[0]] = 'next';
+			
+			updateUser(session, {
+				onChild: onChild
+			})
+		})
+	}
+}
+
+exports.getOnChild = function(session, done){
+	if(db){
+		findUser(session, function(e, docs){
+			var onChild = docs[0].onChild;
+			
+			done(e, onChild);
+		})
+	}else{
+		done('getOnChild: REGISTER DB')
+	}
+}
