@@ -241,22 +241,22 @@ exports.surveyComplete = function(session, qid, done){
 		findUser(session, function(e, docs){
 			var q = Object.keys(docs[0].answers)[0];
 			console.log(q);
-			if(q == qid){
-				console.log('end of the thing');
-				var obj = {
-					state: {
-						profile: 'completed',
-						options: 'next',
-						survey: 'undone',
-						fears: 'undone'
-					}
-				};
-				updateUser(session, obj);
-				done(e, true);
-			}else{
-				done(e, false);
-			}
-			
+			// if(q == qid){
+// 				console.log('end of the thing');
+// 				var obj = {
+// 					state: {
+// 						profile: 'completed',
+// 						options: 'next',
+// 						survey: 'undone',
+// 						fears: 'undone'
+// 					}
+// 				};
+// 				updateUser(session, obj);
+// 				done(e, true);
+// 			}else{
+// 				done(e, false);
+// 			}
+done(e, false);
 		})
 	}else{
 		done('please register db');

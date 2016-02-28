@@ -448,3 +448,7 @@ exports.getQid = function(location){
 exports.setData = function(dat){
 	data = dat;
 }
+
+exports.getData = function(){
+	return data;
+}

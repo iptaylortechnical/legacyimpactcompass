@@ -3,11 +3,13 @@ module.exports = {
 		return {
 			"qid": nomen + "-how-many-children",
 			"title": "How many children do you have?",
-			"description": "Please select the number of children you have.",
+			"type": "static",
+			"description": "Please select the number of children you hav.",
 			"answers": [
 				{
 					"description": "5 children",
 					"answer": 5,
+					"type": "static",
 					"offspring": {
 						"hasChildren": true,
 						"childCount": 2

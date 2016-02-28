@@ -32,8 +32,36 @@ router.get('/', function(req, res, next){
 								surveySections.push(qsets[data[i]](kids[k].name.split(' ')[0]));
 							}
 						}
+						
+						var final = {
+							"test":"test",
+							"qid": "continue",
+							"title": "Continue",
+							"type": "static",
+							"description": "Would you like to continue with the survey?",
+							"answers": [
+								{
+									"description": "Yes",
+									"answer": true,
+									"type": "static",
+									"offspring": {
+										"hasChildren":true,
+										"childCount": surveySections.length
+									},
+									"children": surveySections
+								},
+								{
+									"description": "No",
+									"answer": false,
+									"type": "static",
+									"offspring": {
+										"hasChildren":false
+									}
+								}
+							]
+						};
 				
-						auth.storeSurvey(session, surveySections);
+						auth.storeSurvey(session, final);
 					})
 				}
 			})

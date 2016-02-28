@@ -29,6 +29,9 @@ var authUtil = require('./utilities/auth').setDB(db);
 
 var testroute = require('./socket/realtime');
 app.use('/profile', testroute);
+
+var realtime_survey = require('./socket/realtime_survey');
+app.use('/realtime_survey', realtime_survey);
 // var hier = {
 // 	profile: require('./socket/hier')('profile'),
 // 	survey: require('./socket/hier')('survey')
@@ -41,8 +44,10 @@ function getHierarchy(sessionID, intent, done){
 	
 	if(intent == 'survey'){
 		var tempHier = require('./socket/hier');
-		tempHier.setData(authUtil.getSurvey(sessionID));
-		done(tempHier);
+		authUtil.getSurvey(sessionID, function(e, surv){
+			tempHier.setData(surv);
+			done(tempHier);
+		})
 	}
 }
 
@@ -87,6 +92,7 @@ app.lel = function(io){
 								generateQuestion(question.content, socket, function(){});
 							}else{
 								var question = hier.getFirstQuestion();
+								console.log(question);
 								socket.location = '';
 								socket.content = question;
 								generateQuestion(question, socket, function(){});
@@ -151,6 +157,7 @@ function generateQuestion(content, socket, done){
 	//check if the survey is done
 	authUtil.surveyComplete(socket.session, content.qid, function(e, complete){
 		if(!complete){
+			console.log(content.type);
 			socket.emit('q', JSON.stringify({
 				qid: content.qid,
 				title: content.title,
