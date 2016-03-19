@@ -9,7 +9,6 @@ router.post('/', function(req, res){
 console.log('kd');
 router.get('/', function(req, res){
 	auth = require('../utilities/auth').setDB(req.db);
-	
 	session = req.cookies.sessionID || '';
 	
 	auth.isUser(session, function(err, good){
