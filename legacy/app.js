@@ -68,10 +68,13 @@ app.lel = function(io){
 			//THE REST SHOULD BE IN THE getHierarchy CALLBACK
 			var hier = require('./socket/hier');
 			
+			
+			// o get question set
 			getHierarchy(sessionID, msg.intent, function(surv){
 				hier = surv;
 			});
 			
+			//check user
 			authUtil.isUser(sessionID, function(err, good){
 				socket.authorized = true;
 				socket.session = sessionID;
@@ -80,13 +83,14 @@ app.lel = function(io){
 						console.log('Client with id ' + id + ' has been authorized to use the socket');
 
 						socket.id = id;
-					
+						
+						//get last location, answer
 						authUtil.getLastState(sessionID, function(e, lastLocation, lastAnswer){
 							if(e)console.log(e);
-						
+							
 							if(lastLocation && lastAnswer){
 								var question = hier.getNextQuestion(lastLocation, lastAnswer);
-							
+								
 								socket.location = question.location;
 								socket.content = question.content;
 								generateQuestion(question.content, socket, function(){});
@@ -102,7 +106,7 @@ app.lel = function(io){
 						socket.on('a', function(message) {
 						
 							var mes = JSON.parse(message);
-						
+							
 							var answerIndex = mes.answerIndex;
 						
 							var ans = mes.answer;
@@ -132,7 +136,7 @@ app.lel = function(io){
 						socket.on('b', function(){
 							var question = hier.getPrevious(socket.location);
 							socket.location = question.location;
-						
+							
 							generateQuestion(question.content, socket, function(){});
 						})
 					})
@@ -206,6 +210,7 @@ var usrHome = require('./routes/home');
 var optionsRoute = require('./routes/options');
 var setOptions = require('./routes/setoptions');
 var surveyHome = require('./routes/surveyHome');
+var endpoint = require('./routes/endpoint');
 //user registration
 var usrReg = require('./routes/usrReg');
 var usrNew = require('./routes/usrNew');
@@ -242,6 +247,7 @@ app.use('/q', queryEnd);
 app.use('/options', optionsRoute);
 app.use('/setoptions', setOptions);
 app.use('/take', surveyHome);
+app.use('/endpoint', endpoint);
 
 app.use('/sqltest', le_test);
 app.use('/cooktest', cooktest);
