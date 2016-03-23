@@ -18,12 +18,20 @@ html
               | Sample Question?
             #lel.lel
               #content.content
-                if type == 'static'
+                if type == 'static' || type == 'multi'
                   each val, index in answers
                     .choice.tile(id=index)
                       | #{val.description}
-                if type == 'flatinput'
+                else if type == 'flatinput'
                   input.in(placeholder='#{answers[0].answer}')
+                else if type == 'children'
+                  #childrenholder.childrenholder
+                    #child0.achild
+                      label Name: 
+                      input#name0.name(label='Name:')
+                      label Date: 
+                      input#year0.name(label='Year:')
+                  #add.addchild +
           br
           br
           br

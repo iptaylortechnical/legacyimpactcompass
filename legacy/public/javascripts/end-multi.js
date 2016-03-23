@@ -1,21 +1,9 @@
 var PRODUCTION = false;
 
-var multi = {};
-		
-jQuery('.tile').click(function(){
-	if(!multi[this.id]){
-		$(this).addClass('selected');
-		multi[this.id] = active.answers[this.id];
-	}else{
-		$(this).removeClass('selected');
-		delete multi[this.id];
-	}
-})
+var multi = [];
 
-$('#0').click();
-
-function sendAnswer(type){
-	window.location = '/endpoint?a=' + JSON.stringify(multi) + '&intent=multi';
+function sendAnswer(){
+	window.location = '/endpoint?a=' + JSON.stringify(Object.keys(multi)) + '&intent=multi';
 }
 
 function goBack(){
@@ -25,10 +13,22 @@ function goBack(){
 
 $(document).ready(function(){
 	$('#next').click(function(){
-		sendAnswer(active.type);
+		sendAnswer();
 	})
 	
 	$('#back').click(function(){
 		goBack();
 	})
+	
+	jQuery('.choice').click(function(){
+		if(!multi[parseInt(this.id)]){
+			$(this).addClass('selected');
+			multi[parseInt(this.id)] = parseInt(this.id);
+		}else{
+			$(this).removeClass('selected');
+			delete multi[parseInt(this.id)];
+		}
+	})
+
+	$('#0').click();
 })
