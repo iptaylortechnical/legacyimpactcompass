@@ -21,9 +21,9 @@ html
                 if type == 'static'
                   each val, index in answers
                     .choice.tile(id=index)
-                      | #{val}
+                      | #{val.description}
                 if type == 'flatinput'
-                  .hi
+                  input.in(placeholder='#{answers[0].answer}')
           br
           br
           br

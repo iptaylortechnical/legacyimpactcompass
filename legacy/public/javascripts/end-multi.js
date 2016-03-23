@@ -1,9 +1,6 @@
 var PRODUCTION = false;
 
 var multi = {};
-var currentSelection;
-
-var maxChildIndex;
 		
 jQuery('.tile').click(function(){
 	if(!multi[this.id]){
@@ -18,7 +15,7 @@ jQuery('.tile').click(function(){
 $('#0').click();
 
 function sendAnswer(type){
-	
+	window.location = '/endpoint?a=' + JSON.stringify(multi) + '&intent=multi';
 }
 
 function goBack(){

@@ -453,3 +453,7 @@ exports.setData = function(dat){
 exports.getData = function(){
 	return data;
 }
+
+exports.getFromLocation = function(location){
+	return getLocation(data, location);
+}

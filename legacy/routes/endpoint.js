@@ -22,22 +22,19 @@ router.get('/', function(req, res, next){
 	
 	if(answer){
 		answerAndGet(answer, function(r){
-			console.log(r);
+			// console.log(r);
+			res.writeHead(302, {
+			  'Location': '/endpoint'
+			});
+			res.end();
 		});
 	}else{
 		justGet(function(r){
-			console.log(r);
+			// console.log(r);
+			res.render('end', r);
 		})
 	}
-	res.render('end', {
-		type: 'static',
-		answers: [
-			'this',
-			'is',
-			'a',
-			'test'
-		]
-	});
+	
 	
 	// get answer
 	// get old location, answer from mongo
@@ -47,19 +44,33 @@ router.get('/', function(req, res, next){
 	
 })
 
+//TODO: GET INTENT FROM DB, NOT QUERY
+
 var answerAndGet = function(a, done){
 	authUtil.getLastState(session, function(e, location, answer){
-		var theNext = hier.getNextQuestion(location, intent=='flatinput'?a:0);
-		done(theNext.content);
+		var theNext = hier.getNextQuestion(location, intent=='static'?parseInt(a):0);
+		done();
+		
+		authUtil.setLastState(session, theNext.location, intent=='static'?parseInt(a):0);
 		
 		authUtil.userID(session, function(e, id){
-			authUtil.storeAnswer(true, id, theNext.content.qid, a, function(){});
+			
+			var current = hier.getFromLocation(location);
+			
+			authUtil.storeAnswer(true, id, current.qid, a, function(){});
 		})
-	}
+	})
 }
 
 var justGet = function(done){
-	done('no answer, going default');
+	authUtil.getLastState(session, function(e, location, answer){
+		var current = hier.getFromLocation(location);
+		
+		generateQuestion(current, function(r){
+			console.log(r);
+			done(r);
+		});
+	})
 }
 
 
@@ -81,7 +92,7 @@ function getHierarchy(sessionID, intent, done){
 	}
 }
 
-function generateQuestion(content, socket, done){
+function generateQuestion(content, done){
 	var answerDetails = [];
 	for(var i = 0; i < content.answers.length; i++){
 		answerDetails[i] = {
@@ -90,25 +101,33 @@ function generateQuestion(content, socket, done){
 		};
 	}
 	
+	done({
+		qid: content.qid,
+		title: content.title,
+		type: content.type,
+		description: content.description,
+		answers: answerDetails
+	});
+	
 	//check if the survey is done
-	authUtil.surveyComplete(socket.session, content.qid, function(e, complete){
-		if(!complete){
-			console.log(content.type);
-			socket.emit('q', JSON.stringify({
-				qid: content.qid,
-				title: content.title,
-				type: content.type,
-				description: content.description,
-				answers: answerDetails
-			}));
-		}else{
-			authUtil.setNumberOfChildren(socket.session);
-			authUtil.setOnChild(socket.session);
-			socket.emit('completed');
-			socket.disconnect();
-		}
-		done();
-	})
+	// authUtil.surveyComplete(socket.session, content.qid, function(e, complete){
+// 		if(!complete){
+// 			console.log(content.type);
+// 			socket.emit('q', JSON.stringify({
+// 				qid: content.qid,
+// 				title: content.title,
+// 				type: content.type,
+// 				description: content.description,
+// 				answers: answerDetails
+// 			}));
+// 		}else{
+// 			authUtil.setNumberOfChildren(socket.session);
+// 			authUtil.setOnChild(socket.session);
+// 			socket.emit('completed');
+// 			socket.disconnect();
+// 		}
+// 		done();
+	// })
 }
 
 module.exports = router;
