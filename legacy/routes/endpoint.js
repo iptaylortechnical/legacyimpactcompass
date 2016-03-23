@@ -55,7 +55,7 @@ var answerAndGet = function(a, done){
 		authUtil.userID(session, function(e, id){
 			authUtil.storeAnswer(true, id, theNext.content.qid, a, function(){});
 		})
-	})
+	}
 }
 
 var justGet = function(done){
