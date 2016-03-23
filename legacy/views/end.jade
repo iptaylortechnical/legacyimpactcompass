@@ -1,0 +1,35 @@
+html
+  head
+    link(rel='stylesheet' href='/stylesheets/question.css')
+    script(src='/javascripts/jquery.min.js')
+    link(href='https://fonts.googleapis.com/css?family=Josefin+Slab', rel='stylesheet', type='text/css')
+    script(src='/javascripts/end-#{type}.js')
+  body
+    .m
+      .controllers
+        .contentcont
+          br
+          br
+          br
+          br
+          br
+          #controller.lol
+            #qtitle.title
+              | Sample Question?
+            #lel.lel
+              #content.content
+                if type == 'static'
+                  each val, index in answers
+                    .choice.tile(id=index)
+                      | #{val}
+                if type == 'flatinput'
+                  .hi
+          br
+          br
+          br
+      .btnmaster
+        .btncont
+          #back.btn.back
+            | back
+          #next.btn.next
+            | next

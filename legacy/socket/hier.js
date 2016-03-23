@@ -354,6 +354,7 @@ function getNextSibling(data, str) {
 
 function hasChildren(data, questionLocation, answer) {
 	var obj = getLocation(data, questionLocation);
+	console.log(answer);
 	var hasKids = obj.answers[answer].offspring.hasChildren;
 	
 	return hasKids;

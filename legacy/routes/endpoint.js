@@ -3,8 +3,41 @@ var router = express.Router();
 var xt = require('../utilities/next');
 
 var authUtil;
+var hier = require('../socket/hier');
+var session;
+var intent;
 
 router.get('/', function(req, res, next){
+	
+	authUtil = require('../utilities/auth').setDB(req.db);
+	
+	var request = req.query;
+	session = req.cookies.sessionID;
+	console.log(session);
+	
+	// consigncloud
+	
+	var answer = request.a;
+	intent = request.intent;
+	
+	if(answer){
+		answerAndGet(answer, function(r){
+			console.log(r);
+		});
+	}else{
+		justGet(function(r){
+			console.log(r);
+		})
+	}
+	res.render('end', {
+		type: 'static',
+		answers: [
+			'this',
+			'is',
+			'a',
+			'test'
+		]
+	});
 	
 	// get answer
 	// get old location, answer from mongo
@@ -12,9 +45,23 @@ router.get('/', function(req, res, next){
 	// store this answer
 	// render with data
 	
-	authUtil = require('../utilities/auth').setDB(req.db);
-	res.send(xt.a + "");
 })
+
+var answerAndGet = function(a, done){
+	authUtil.getLastState(session, function(e, location, answer){
+		var theNext = hier.getNextQuestion(location, intent=='flatinput'?a:0);
+		done(theNext.content);
+		
+		authUtil.userID(session, function(e, id){
+			authUtil.storeAnswer(true, id, theNext.content.qid, a, function(){});
+		})
+	})
+}
+
+var justGet = function(done){
+	done('no answer, going default');
+}
+
 
 router.post('/', function(req, res){
 	res.send('get only');

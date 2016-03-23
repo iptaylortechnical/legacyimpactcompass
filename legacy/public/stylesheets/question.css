@@ -121,3 +121,7 @@ p{
 	cursor:pointer;
 	
 }
+
+.selected{
+	background-color:grey;
+}
