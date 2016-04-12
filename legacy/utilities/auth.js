@@ -24,18 +24,14 @@ var updateUser = function(sessionID, obj){
 }
 
 //TODO: use native funs
-exports.storeAnswer = function(authorized, id, qid, answer, callback){
-	if(authorized){
+exports.storeAnswer = function(sessionID, qid, answer){
 		var users = db.get('users');
 		
 		var toSet = {};
 		
 		toSet['answers.'+qid] = answer;
 		
-		users.update(id, {$set:toSet});
-	}else{
-		callback('client not authorized');
-	}
+		users.update({'sessionid':sessionID}, {$set:toSet});
 }
 
 exports.userID = function(session, callback){

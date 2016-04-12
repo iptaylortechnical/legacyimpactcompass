@@ -37,148 +37,147 @@ app.use('/realtime_survey', realtime_survey);
 // 	survey: require('./socket/hier')('survey')
 // }
 
-function getHierarchy(sessionID, intent, done){
-	if(intent == 'profile'){
-		done(require('./socket/hier'));
-	}
-	
-	if(intent == 'survey'){
-		var tempHier = require('./socket/hier');
-		authUtil.getSurvey(sessionID, function(e, surv){
-			tempHier.setData(surv);
-			done(tempHier);
-		})
-	}
-}
-
-app.lel = function(io){
-	io.on('connection', function(socket){
-		
-		socket.emit('authentication_request');
-		console.log("delivered authentication request to client");
-		
-		socket.on('authentication_attempt', function(msg){
-			
-			var parsedAuth = msg;
-			console.log("recieved authentication attempt client with intent: " + msg.intent);
-			var sessionID = parsedAuth.sessionID;
-			
-			
-			//EWWWWWW. THIS IS HORRIBLE AND TOTALLY UNSAFE
-			//THE REST SHOULD BE IN THE getHierarchy CALLBACK
-			var hier = require('./socket/hier');
-			
-			
-			// o get question set
-			getHierarchy(sessionID, msg.intent, function(surv){
-				hier = surv;
-			});
-			
-			//check user
-			authUtil.isUser(sessionID, function(err, good){
-				socket.authorized = true;
-				socket.session = sessionID;
-				if(good){
-					authUtil.userID(sessionID, function(e, id){
-						console.log('Client with id ' + id + ' has been authorized to use the socket');
-
-						socket.id = id;
-						
-						//get last location, answer
-						authUtil.getLastState(sessionID, function(e, lastLocation, lastAnswer){
-							if(e)console.log(e);
-							
-							if(lastLocation && lastAnswer){
-								var question = hier.getNextQuestion(lastLocation, lastAnswer);
-								
-								socket.location = question.location;
-								socket.content = question.content;
-								generateQuestion(question.content, socket, function(){});
-							}else{
-								var question = hier.getFirstQuestion();
-								console.log(question);
-								socket.location = '';
-								socket.content = question;
-								generateQuestion(question, socket, function(){});
-							}
-						})
-
-						socket.on('a', function(message) {
-						
-							var mes = JSON.parse(message);
-							
-							var answerIndex = mes.answerIndex;
-						
-							var ans = mes.answer;
-							console.log(ans);
-						
-							var answer = ans;
-							var oldQid = hier.getQid(socket.location);
-						
-							authUtil.setLastState(sessionID, socket.location, answerIndex);
-						
-							var question = hier.getNextQuestion(socket.location, answerIndex);
-							socket.location = question.location;
-							socket.content = question.content;
-						
-							generateQuestion(question.content, socket, function(){
-								console.log('storing answer...');
-								authUtil.storeAnswer(!!socket.authorized, socket.id, oldQid, answer, function(e){
-									console.log("store error: " + e);
-								})
-							});
-						
-				    });
-					
-						//TODO: this is the worst.
-						//literally.
-						//currently gets parent question, not last question. im going to bed.
-						socket.on('b', function(){
-							var question = hier.getPrevious(socket.location);
-							socket.location = question.location;
-							
-							generateQuestion(question.content, socket, function(){});
-						})
-					})
-				}else{
-					console.log('unathorized. terminating socket.');
-					socket.disconnect();
-				}
-			})
-		})
-		//end
-	})
-}
-
-function generateQuestion(content, socket, done){
-	var answerDetails = [];
-	for(var i = 0; i < content.answers.length; i++){
-		answerDetails[i] = {
-			description: content.answers[i].description,
-			answer: content.answers[i].answer
-		};
-	}
-	//check if the survey is done
-	authUtil.surveyComplete(socket.session, content.qid, function(e, complete){
-		if(!complete){
-			console.log(content.type);
-			socket.emit('q', JSON.stringify({
-				qid: content.qid,
-				title: content.title,
-				type: content.type,
-				description: content.description,
-				answers: answerDetails
-			}));
-		}else{
-			authUtil.setNumberOfChildren(socket.session);
-			authUtil.setOnChild(socket.session);
-			socket.emit('completed');
-			socket.disconnect();
-		}
-		done();
-	})
-}
-
+// function getHierarchy(sessionID, intent, done){
+// 	if(intent == 'profile'){
+// 		done(require('./socket/hier'));
+// 	}
+//
+// 	if(intent == 'survey'){
+// 		var tempHier = require('./socket/hier');
+// 		authUtil.getSurvey(sessionID, function(e, surv){
+// 			tempHier.setData(surv);
+// 			done(tempHier);
+// 		})
+// 	}
+// }
+//
+// app.lel = function(io){
+// 	io.on('connection', function(socket){
+//
+// 		socket.emit('authentication_request');
+// 		console.log("delivered authentication request to client");
+//
+// 		socket.on('authentication_attempt', function(msg){
+//
+// 			var parsedAuth = msg;
+// 			console.log("recieved authentication attempt client with intent: " + msg.intent);
+// 			var sessionID = parsedAuth.sessionID;
+//
+//
+// 			//EWWWWWW. THIS IS HORRIBLE AND TOTALLY UNSAFE
+// 			//THE REST SHOULD BE IN THE getHierarchy CALLBACK
+// 			var hier = require('./socket/hier');
+//
+//
+// 			// o get question set
+// 			getHierarchy(sessionID, msg.intent, function(surv){
+// 				hier = surv;
+// 			});
+//
+// 			//check user
+// 			authUtil.isUser(sessionID, function(err, good){
+// 				socket.authorized = true;
+// 				socket.session = sessionID;
+// 				if(good){
+// 					authUtil.userID(sessionID, function(e, id){
+// 						console.log('Client with id ' + id + ' has been authorized to use the socket');
+//
+// 						socket.id = id;
+//
+// 						//get last location, answer
+// 						authUtil.getLastState(sessionID, function(e, lastLocation, lastAnswer){
+// 							if(e)console.log(e);
+//
+// 							if(lastLocation && lastAnswer){
+// 								var question = hier.getNextQuestion(lastLocation, lastAnswer);
+//
+// 								socket.location = question.location;
+// 								socket.content = question.content;
+// 								generateQuestion(question.content, socket, function(){});
+// 							}else{
+// 								var question = hier.getFirstQuestion();
+// 								console.log(question);
+// 								socket.location = '';
+// 								socket.content = question;
+// 								generateQuestion(question, socket, function(){});
+// 							}
+// 						})
+//
+// 						socket.on('a', function(message) {
+//
+// 							var mes = JSON.parse(message);
+//
+// 							var answerIndex = mes.answerIndex;
+//
+// 							var ans = mes.answer;
+// 							console.log(ans);
+//
+// 							var answer = ans;
+// 							var oldQid = hier.getQid(socket.location);
+//
+// 							authUtil.setLastState(sessionID, socket.location, answerIndex);
+//
+// 							var question = hier.getNextQuestion(socket.location, answerIndex);
+// 							socket.location = question.location;
+// 							socket.content = question.content;
+//
+// 							generateQuestion(question.content, socket, function(){
+// 								console.log('storing answer...');
+// 								authUtil.storeAnswer(!!socket.authorized, socket.id, oldQid, answer, function(e){
+// 									console.log("store error: " + e);
+// 								})
+// 							});
+//
+// 				    });
+//
+// 						//TODO: this is the worst.
+// 						//literally.
+// 						//currently gets parent question, not last question. im going to bed.
+// 						socket.on('b', function(){
+// 							var question = hier.getPrevious(socket.location);
+// 							socket.location = question.location;
+//
+// 							generateQuestion(question.content, socket, function(){});
+// 						})
+// 					})
+// 				}else{
+// 					console.log('unathorized. terminating socket.');
+// 					socket.disconnect();
+// 				}
+// 			})
+// 		})
+// 		//end
+// 	})
+// }
+//
+// function generateQuestion(content, socket, done){
+// 	var answerDetails = [];
+// 	for(var i = 0; i < content.answers.length; i++){
+// 		answerDetails[i] = {
+// 			description: content.answers[i].description,
+// 			answer: content.answers[i].answer
+// 		};
+// 	}
+// 	//check if the survey is done
+// 	authUtil.surveyComplete(socket.session, content.qid, function(e, complete){
+// 		if(!complete){
+// 			console.log(content.type);
+// 			socket.emit('q', JSON.stringify({
+// 				qid: content.qid,
+// 				title: content.title,
+// 				type: content.type,
+// 				description: content.description,
+// 				answers: answerDetails
+// 			}));
+// 		}else{
+// 			authUtil.setNumberOfChildren(socket.session);
+// 			authUtil.setOnChild(socket.session);
+// 			socket.emit('completed');
+// 			socket.disconnect();
+// 		}
+// 		done();
+// 	})
+// }
 
 //expose db instance to all endpoints
 //TODO: THIS IS SUBOPTIMAL. IN THE FUTURE, EXPOSE ONLY TO AUTH.JS ETC

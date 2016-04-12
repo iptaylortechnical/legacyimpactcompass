@@ -4,6 +4,7 @@ var xt = require('../utilities/next');
 
 var authUtil;
 var hier = require('../socket/hier');
+var instructions = require('../utilities/instructions.js');
 var session;
 var intent;
 
@@ -13,27 +14,16 @@ router.get('/', function(req, res, next){
 	
 	var request = req.query;
 	session = req.cookies.sessionID;
-	console.log(session);
-	
-	// consigncloud
 	
 	var answer = request.a;
-	intent = request.intent;
 	
-	if(answer){
-		answerAndGet(answer, function(r){
-			// console.log(r);
-			res.writeHead(302, {
-			  'Location': '/endpoint'
-			});
-			res.end();
-		});
-	}else{
-		justGet(function(r){
-			// console.log(r);
-			res.render('end', r);
-		})
-	}
+	console.log(answer);
+	
+	//state object
+	
+	var inst = instructions({}, answer);
+	inst.storeAnswer(authUtil, session, answer);
+	res.render('end', inst.render);
 	
 	
 	// get answer
@@ -44,90 +34,8 @@ router.get('/', function(req, res, next){
 	
 })
 
-//TODO: GET INTENT FROM DB, NOT QUERY
-
-var answerAndGet = function(a, done){
-	authUtil.getLastState(session, function(e, location, answer){
-		var theNext = hier.getNextQuestion(location, intent=='static'?parseInt(a):0);
-		done();
-		
-		authUtil.setLastState(session, theNext.location, intent=='static'?parseInt(a):0);
-		
-		authUtil.userID(session, function(e, id){
-			
-			var current = hier.getFromLocation(location);
-			
-			authUtil.storeAnswer(true, id, current.qid, a, function(){});
-		})
-	})
-}
-
-var justGet = function(done){
-	authUtil.getLastState(session, function(e, location, answer){
-		var current = hier.getFromLocation(location);
-		
-		generateQuestion(current, function(r){
-			console.log(r);
-			done(r);
-		});
-	})
-}
-
-
 router.post('/', function(req, res){
 	res.send('get only');
 })
-
-function getHierarchy(sessionID, intent, done){
-	if(intent == 'profile'){
-		done(require('./socket/hier'));
-	}
-	
-	if(intent == 'survey'){
-		var tempHier = require('./socket/hier');
-		authUtil.getSurvey(sessionID, function(e, surv){
-			tempHier.setData(surv);
-			done(tempHier);
-		})
-	}
-}
-
-function generateQuestion(content, done){
-	var answerDetails = [];
-	for(var i = 0; i < content.answers.length; i++){
-		answerDetails[i] = {
-			description: content.answers[i].description,
-			answer: content.answers[i].answer
-		};
-	}
-	
-	done({
-		qid: content.qid,
-		title: content.title,
-		type: content.type,
-		description: content.description,
-		answers: answerDetails
-	});
-	
-	//check if the survey is done
-	// authUtil.surveyComplete(socket.session, content.qid, function(e, complete){
-// 		if(!complete){
-// 			console.log(content.type);
-// 			socket.emit('q', JSON.stringify({
-// 				qid: content.qid,
-// 				title: content.title,
-// 				type: content.type,
-// 				description: content.description,
-// 				answers: answerDetails
-// 			}));
-// 		}else{
-// 			authUtil.setNumberOfChildren(socket.session);
-// 			authUtil.setOnChild(socket.session);
-// 			socket.emit('completed');
-// 			socket.disconnect();
-// 		}
-// 		done();
-	// })
-}
 
 module.exports = router;

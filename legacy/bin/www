@@ -31,8 +31,6 @@ server.on('listening', onListening);
 
 var io = require('socket.io').listen(server.listen(port));
 
-app.lel(io);
-
 // io.on("connection", function(socket){
 //   console.log("received connection");
 // })

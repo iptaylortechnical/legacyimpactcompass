@@ -15,7 +15,7 @@ html
           br
           #controller.lol
             #qtitle.title
-              | Sample Question?
+              | #{question}
             #lel.lel
               #content.content
                 if type == 'static' || type == 'multi'
@@ -23,7 +23,7 @@ html
                     .choice.tile(id=index)
                       | #{val.description}
                 else if type == 'flatinput'
-                  input.in(placeholder='#{answers[0].answer}')
+                  input.in(placeholder='#{placeholder}')
                 else if type == 'children'
                   #childrenholder.childrenholder
                     #child0.achild
